@@ -1,0 +1,21 @@
+.navbar a {
+    color: black;
+    font-size: 1rem;
+}
+.navbar a:hover {
+    color: #0c014a;
+}
+.navbar-brand {
+    font-weight: 800;
+}
+.btn {
+    background-color: #130657;
+    width: auto;
+    color: white !important;
+}
+.navbar-toggler {
+    border: none;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+    padding: 0.2rem 0.3rem;
+}
