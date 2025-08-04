@@ -47,5 +47,6 @@ p {
 }
 
 .services-btn:hover {
-    background-color: #393677;
+    background-color: #393847;
+    color: white;
 }

@@ -37,17 +37,12 @@
       <!-- Social Links -->
      <div class="col-md-3">
   <h6 class="fw-bold text-dark mb-3">Social Links</h6>
-  <div class="d-flex gap-3 justify-content-center justify-content-md-start fs-4">
-    <a href="#" aria-label="Chat" class="text-muted hover-primary">
-      <i class="bi bi-chat-dots"></i>
-    </a>
-    <a href="#" aria-label="X" class="text-muted hover-primary">
-      <i class="bi bi-x-circle"></i>
-    </a>
-    <a href="#" aria-label="LinkedIn" class="text-muted hover-primary">
-      <i class="bi bi-linkedin"></i>
-    </a>
-  </div>
+  <div class="position-relative mt-4">
+    <div class="social-icons d-flex gap-2">
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-discord"></i></a>
+    </div>
 </div>
 
 

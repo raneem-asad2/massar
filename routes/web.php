@@ -16,9 +16,9 @@ Route::get('/services', function () {
     return view('services');
 });
 
-Route::get('/contact', function () {
-    return view('contact');
-});
+Route::view('/contact', 'contact')->name('contact');
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

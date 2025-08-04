@@ -27,7 +27,7 @@
                     <li class="nav-item"><a class="nav-link px-3" href="/">Home</a></li>
                     <li class="nav-item"><a class="nav-link px-3" href="/">About Us</a></li>
                     <li class="nav-item"><a class="nav-link px-3" href="/">Services</a></li>
-                    <li class="nav-item"><a class="nav-link px-3" href="/">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link px-3" href="{{route('contact')}}">Contact Us</a></li>
                 </ul>
                 <a href="/" class="btn-login ms-lg-3 mt-2 mt-lg-0">Login</a>
             </div>
