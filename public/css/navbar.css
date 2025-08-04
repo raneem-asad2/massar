@@ -1,21 +1,37 @@
-.navbar a {
-    color: black;
+/* General Navbar Styling */
+.navbar a.nav-link {
+    color: #333;
     font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
 }
-.navbar a:hover {
-    color: #0c014a;
+
+.navbar a.nav-link:hover {
+    color: #393677;
 }
+
 .navbar-brand {
     font-weight: 800;
+    font-size: 1.2rem;
+    color: #130657;
 }
-.btn {
+
+.btn-login {
     background-color: #130657;
-    width: auto;
     color: white !important;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
 }
+
+.btn-login:hover {
+    background-color: #393677;
+}
+
 .navbar-toggler {
     border: none;
     border-radius: 0.5rem;
-    transition: background-color 0.3s ease;
-    padding: 0.2rem 0.3rem;
+    padding: 0.3rem 0.6rem;
+    background-color: #e7e7e7;
 }

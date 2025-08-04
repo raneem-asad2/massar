@@ -1,0 +1,4 @@
+.hover-primary:hover {
+    color: #130657 !important; /* Your primary brand color */
+    cursor: pointer;
+}
