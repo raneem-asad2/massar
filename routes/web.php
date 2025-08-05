@@ -20,33 +20,34 @@ Route::view('/contact', 'contact')->name('contact');
 
 
 
+
 Route::get('/dashboard', function () {
-    return view('dashboard');
-});
+    return view('admin.dashboard');
+})->name('dashboard');
 
 Route::get('/table', function () {
-    return view('dashboard.table');
-});
-Route::get('/admin/users', function () {
-    return view('dashboard.users');
-});
+    return view('admin.table');
+})->name('table');
 
+Route::get('/users', function () {
+    return view('admin.users');
+})->name('users');
 
 Route::prefix('mailbox')->group(function () {
+
     Route::get('/inbox', function () {
-        return view('dashboard.mailbox.mailbox');
-    });
-    Route::get('/inbox', function () {
-        return view('dashboard.mailbox.inbox');
-    });
+        return view('admin.mailbox.inbox');
+    })->name('mailbox.inbox');
+
     Route::get('/compose', function () {
-        return view('dashboard.mailbox.compose');
-    });
+        return view('admin.mailbox.compose');
+    })->name('mailbox.compose');
 
     Route::get('/read', function () {
-        return view('dashboard.mailbox.read');
-    });
+        return view('admin.mailbox.read');
+    })->name('mailbox.read');
 });
+
 
 // Route::middleware('auth')->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

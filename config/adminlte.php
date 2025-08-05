@@ -299,189 +299,65 @@ return [
     |
     */
 
-    'menu' => [
-        // Navbar items:
-       [
-    'type'         => 'navbar-search',
-    'text'         => 'Search',
-    'topnav_right' => true,
-],
+ 'menu' => [
+    // Navbar items:
+    [
+        'type'         => 'navbar-search',
+        'text'         => 'search',
+        'topnav_right' => true,
+    ],
 
-[
-    'type'         => 'fullscreen-widget',
-    'topnav_right' => true,
-],
+    [
+        'type'         => 'fullscreen-widget',
+        'topnav_right' => true,
+    ],
 
-[
-    'type'         => 'navbar-notification',
-    'id'           => 'notifications',
-    'icon'         => 'fas fa-bell',
-    'topnav_right' => true,
-    'dropdown_mode' => true,
-    'dropdown_flabel' => 'View all notifications',
-    'url'          => '#',
-    'label'        => 3,
-    'label_color'  => 'danger',
-    'items' => [
-        [
-            'text' => 'New user registered',
-            'icon' => 'fas fa-user-plus text-success',
-            'url'  => '#',
-        ],
-        [
-            'text' => 'Server overloaded',
-            'icon' => 'fas fa-server text-warning',
-            'url'  => '#',
-        ],
-        [
-            'text' => 'New message received',
-            'icon' => 'fas fa-envelope text-primary',
-            'url'  => '#',
-        ],
+    // Sidebar items:
+    [
+        'type' => 'sidebar-menu-search',
+        'text' => 'search',
+    ],
+
+    [
+        'text' => 'blog',
+        'url'  => 'admin/blog',
+        'can'  => 'manage-blog',
+    ],
+
+    ['header' => 'account_settings'],
+
+    [
+        'text' => 'profile',
+        'url'  => 'admin/settings',
+        'icon' => 'fas fa-fw fa-user',
+    ],
+
+    [
+        'text' => 'change_password',
+        'url'  => 'admin/settings',
+        'icon' => 'fas fa-fw fa-lock',
+    ],
+
+    ['header' => 'labels'],
+
+    [
+        'text'       => 'important',
+        'icon_color' => 'red',
+        'url'        => '#',
+    ],
+
+    [
+        'text'       => 'warning',
+        'icon_color' => 'yellow',
+        'url'        => '#',
+    ],
+
+    [
+        'text'       => 'information',
+        'icon_color' => 'cyan',
+        'url'        => '#',
     ],
 ],
-
-[
-    'type'         => 'navbar-notification',
-    'id'           => 'messages',
-    'icon'         => 'fas fa-envelope',
-    'topnav_right' => true,
-    'dropdown_mode' => true,
-    'dropdown_flabel' => 'Read all messages',
-    'url'          => '#',
-    'label'        => 2,
-    'label_color'  => 'info',
-    'items' => [
-        [
-            'text' => 'From John: Project Update',
-            'icon' => 'fas fa-user text-primary',
-            'url'  => '#',
-        ],
-        [
-            'text' => 'From Raneem: Meeting Tomorrow',
-            'icon' => 'fas fa-user text-success',
-            'url'  => '#',
-        ],
-    ],
-],
-
-
-        // Sidebar items:
-        [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
-        ],
-        [
-            'text' => 'blog',
-            'url' => 'admin/blog',
-            'can' => 'manage-blog',
-        ],
-       
-
-        [
-            'text' => 'pages',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
-          [
-            'text' => 'Users',
-            'url'  => 'admin/users',
-            'icon' => 'fas fa-users',
-         ],
-         [
-    'text' => 'Mailbox',
-    'icon' => 'fas fa-envelope',
-    'submenu' => [
-        [
-            'text' => 'Inbox',
-            'url'  => 'mailbox/inbox',
-            'icon' => 'fas fa-inbox',
-        ],
-        [
-            'text' => 'Compose',
-            'url'  => 'mailbox/compose',
-            'icon' => 'fas fa-edit',
-        ],
-        [
-            'text' => 'Read',
-            'url'  => 'mailbox/read',
-            'icon' => 'fas fa-envelope-open-text',
-        ],
-    ],
-],
-[
-    'text' => 'Table',
-    'url'  => 'table',
-    'icon' => 'fas fa-fw fa-table',
-],
-        [
-            'text' => 'profile',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-            ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
-        ],
-        [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
-        ],
-    ],
 
     /*
     |--------------------------------------------------------------------------

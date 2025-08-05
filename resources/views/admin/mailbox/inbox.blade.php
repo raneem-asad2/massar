@@ -1,5 +1,6 @@
 @extends('adminlte::page')
 
+
 @section('title', 'Inbox')
 
 @section('content_header')

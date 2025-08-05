@@ -1,5 +1,6 @@
 @extends('adminlte::page')
 
+
 @section('title', 'Compose Mail')
 
 @section('content_header')
