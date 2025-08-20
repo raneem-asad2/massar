@@ -11,19 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // 1️⃣ Create roles table
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('role_name')->unique();
             $table->timestamps();
         });
 
-        // 2️⃣ Add role_id to users table
         Schema::table('users', function (Blueprint $table) {
-            // Drop the existing 'role' column if it was present and not removed
-            // if (Schema::hasColumn('users', 'role')) {
-            //     $table->dropColumn('role');
-            // }
             $table->foreignId('role_id')->default(3)->constrained('roles');
         });
     }
