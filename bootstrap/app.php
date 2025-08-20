@@ -10,9 +10,17 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware): void {
-        //
+    ->withMiddleware(function (Middleware $middleware) {
+        // This is where you register middleware
     })
-    ->withExceptions(function (Exceptions $exceptions): void {
-        //
+
+     ->withMiddleware(function (Middleware $middleware) {
+        // Add your route middleware alias here
+        $middleware->alias([
+            'role' => \App\Http\Middleware\CheckUserRole::class,
+        ]);
+    })
+    
+    ->withExceptions(function (Exceptions $exceptions) {
+        // ...
     })->create();

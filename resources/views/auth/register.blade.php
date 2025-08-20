@@ -16,26 +16,42 @@
                 <div class="card border border-2 rounded-4 shadow-sm">
                     <div class="card-body p-4">
                         <h1 class="card-title mb-4 fs-3">Create an account</h1>
-                        <form>
+
+                        {{-- ✅ Laravel default register form --}}
+                        <form method="POST" action="{{ route('register') }}">
+                            @csrf
+
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email address</label>
-                                <input type="email" class="form-control py-2" id="email" required>
+                                <label for="name" class="form-label">Username</label>
+                                <input type="text" name="name" class="form-control py-2" id="name" value="{{ old('name') }}" required autofocus>
+                                @error('name')
+                                    <span class="text-danger small">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control py-2" id="username" required>
+                                <label for="email" class="form-label">Email address</label>
+                                <input type="email" name="email" class="form-control py-2" id="email" value="{{ old('email') }}" required>
+                                @error('email')
+                                    <span class="text-danger small">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <div class="input-group">
-                                    <input type="password" class="form-control py-2" id="password" required>
-                                </div>
+                                <input type="password" name="password" class="form-control py-2" id="password" required>
                                 <div class="d-flex mt-2">
                                     <small class="text-muted me-3">Use a number (e.g. 1234)</small>
                                     <small class="text-muted">Use a symbol (e.g. !@#8)</small>
                                 </div>
+                                @error('password')
+                                    <span class="text-danger small">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="password_confirmation" class="form-label">Confirm Password</label>
+                                <input type="password" name="password_confirmation" class="form-control py-2" id="password_confirmation" required>
                             </div>
 
                             <div class="mb-4 form-check d-flex align-items-center">
@@ -51,7 +67,7 @@
                         <hr class="my-3">
 
                         <div class="text-center">
-                            <p>Already have an account? <a href="login" class="text-decoration-none fw-bold">Sign in</a></p>
+                            <p>Already have an account? <a href="{{ route('login') }}" class="text-decoration-none fw-bold">Sign in</a></p>
                         </div>
                     </div>
                 </div>
