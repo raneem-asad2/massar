@@ -16,11 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//======================================================================
-// PUBLIC ROUTES
-// Accessible to everyone, including guests.
-//======================================================================
-
 Route::get('/', function () {
     return view('home');
 })->name('home.public');
@@ -36,21 +31,12 @@ Route::get('/services', function () {
 Route::view('/contact', 'contact')->name('contact');
 
 
-//======================================================================
 // AUTHENTICATION ROUTES
-// This helper method registers all standard auth routes:
-// login, register, password reset, etc.
-//======================================================================
 
 Auth::routes();
 
 
-//======================================================================
 // AUTHENTICATED USER ROUTES
-// Routes that require a user to be logged in. If a guest tries to
-// access these, they will be redirected to the login page.
-//======================================================================
-
 Route::middleware('auth')->group(function () {
     // The default dashboard for logged-in users
     Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -62,13 +48,9 @@ Route::middleware('auth')->group(function () {
 });
 
 
-//======================================================================
 // ADMIN ROUTES
-// Routes protected by both 'auth' and 'role:admin' middleware.
-// Only logged-in administrators can access these.
-//======================================================================
 
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'role:admin,editor'])->prefix('admin')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');

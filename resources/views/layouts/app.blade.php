@@ -61,12 +61,12 @@
                       {{ Auth::user()->name }}
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                      <li><a class="dropdown-item" href="{{ route('home') }}">Dashboard</a></li>
 
                       {{-- Show Admin Link if user is an admin --}}
-                      @if(Auth::user()->role && Auth::user()->role->role_name == 'admin')
-                          <li><a class="dropdown-item" href="{{ route('dashboard') }}">Admin Panel</a></li>
+                     @if(Auth::user()->role && in_array(Auth::user()->role->role_name, ['admin', 'editor']))
+                      <li><a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a></li>
                       @endif
+
 
                       <li>
                           <a class="dropdown-item" href="{{ route('logout') }}"
