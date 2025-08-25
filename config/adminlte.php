@@ -152,10 +152,10 @@ return [
     |
     */
 
-    'layout_topnav' => false,
+'layout_topnav' => false,
 'layout_boxed' => null,
 'layout_fixed_sidebar' => true,
-'layout_fixed_navbar' => true,
+'layout_fixed_navbar' => false,
 'layout_fixed_footer' => null,
 'layout_dark_mode' => false,
 
@@ -215,7 +215,7 @@ return [
     |
     */
 
-    'sidebar_mini' => 'lg',
+    'sidebar_mini' => 'sm',
     'sidebar_collapse' => false,
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
@@ -258,7 +258,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'admin.dashboard',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -266,6 +266,20 @@ return [
     'password_email_url' => 'password/email',
     'profile_url' => false,
     'disable_darkmode_routes' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Views
+    |--------------------------------------------------------------------------
+    |
+    | Here we can modify the start view and the left sidebar view.
+    |
+    */
+
+    'page_view' => 'adminlte::page',
+    'top_nav_view' => 'admin.navbar',
+    'sidebar_view' => 'adminlte::partials.sidebar.left-sidebar',
+
 
     /*
     |--------------------------------------------------------------------------
@@ -300,17 +314,6 @@ return [
     */
 
  'menu' => [
-    // Navbar items:
-    [
-        'type'         => 'navbar-search',
-        'text'         => 'search',
-        'topnav_right' => true,
-    ],
-
-    [
-        'type'         => 'fullscreen-widget',
-        'topnav_right' => true,
-    ],
 
     // Sidebar items:
     [

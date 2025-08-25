@@ -22,7 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role_id', // Changed from 'role_name' to 'role_id'
+        'role_id',
     ];
 
     /**
@@ -50,7 +50,12 @@ class User extends Authenticatable
 
     public function role()
     {
-        // A User belongs to one Role
         return $this->belongsTo(Role::class);
     }
+
+    public function hasRole($role)
+    {
+        return $this->role && $this->role->role_name === $role;
+    }
+
 }

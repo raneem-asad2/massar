@@ -1,181 +1,79 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-  <!-- Brand Logo -->
-  <a href="#" class="brand-link">
-    <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-    <span class="brand-text font-weight-light">AdminLTE 3</span>
+  <a href="{{ route('admin.dashboard') }}" class="brand-link">
+    <img src="{{ asset('vendor/adminlte/dist/img/AdminLTELogo.png') }}" alt="Massar Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <span class="brand-text font-weight-light">Massar Project</span>
   </a>
 
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <!-- User Panel -->
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div class="image">
-        <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
-      </div>
-      <div class="info">
-        <a href="#" class="d-block">Alexander Pierce</a>
-      </div>
-    </div>
-
-    <!-- Sidebar Search -->
-    <div class="form-inline">
-      <div class="input-group" data-widget="sidebar-search">
-        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-        <div class="input-group-append">
-          <button class="btn btn-sidebar">
-            <i class="fas fa-search fa-fw"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sidebar Menu -->
     <nav class="mt-2">
-      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+      <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
 
-        <!-- Dashboard -->
+        <li class="nav-header">MANAGEMENT</li>
+
         <li class="nav-item">
-          <a href="{{ route('dashboard') }}" class="nav-link">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p>Dashboard</p>
+          <a href="{{ route('admin.robots.index') }}" class="nav-link">
+            <i class="fas fa-robot nav-icon"></i>
+            <p>Robots List</p>
           </a>
         </li>
-
-        <!-- Users -->
         <li class="nav-item">
-          <a href="{{ route('users') }}" class="nav-link">
-            <i class="nav-icon fas fa-users"></i>
-            <p>Users</p>
+          <a href="{{ route('admin.maintenance.index') }}" class="nav-link">
+            <i class="fas fa-tools nav-icon"></i>
+            <p>Maintenance Records</p>
           </a>
         </li>
-
-        <!-- Tables -->
         <li class="nav-item">
-          <a href="{{ route('table') }}" class="nav-link">
-            <i class="nav-icon fas fa-table"></i>
-            <p>Tables</p>
+          <a href="{{ route('admin.projects.index') }}" class="nav-link">
+            <i class="fas fa-folder-open nav-icon"></i>
+            <p>Projects</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('admin.road-segments.index') }}" class="nav-link">
+            <i class="fas fa-map-marked-alt nav-icon"></i>
+            <p>Road Segments</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('admin.street-defects.index') }}" class="nav-link ">
+            <i class="fas fa-exclamation-circle nav-icon"></i>
+            <p>Street Defects</p>
           </a>
         </li>
 
-        <!-- Mailbox -->
-        <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-envelope"></i>
-            <p>
-              Mailbox
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{ route('mailbox.inbox') }}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Inbox</p>
+        @if (Auth::user()->role && Auth::user()->role->role_name == 'admin')
+          <li class="nav-header">ADMINISTRATION</li>
+
+          <li class="nav-item">
+            <a href="{{ route('admin.users.index') }}" class="nav-link">
+              <i class="fas fa-users nav-icon"></i>
+              <p>Application Users</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('admin.staff.index') }}" class="nav-link">
+              <i class="fas fa-user-tie nav-icon"></i>
+              <p>Staff</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('admin.messages.index') }}" class="nav-link">
+              <i class="nav-icon fas fa-fw fa-envelope"></i>
+              <p>Contact Messages</p>
+            </a>
+          </li>
+        @endif
+
+       @if (Auth::user()->role && Auth::user()->role->role_name == 'editor')
+          <li class="nav-item">
+              <a href="{{ route('admin.profile.index') }}" class="nav-link">
+                  <i class="nav-icon fas fa-fw fa-envelope"></i>
+                  <p>profile</p>
               </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('mailbox.compose') }}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Compose</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('mailbox.read') }}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Read</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-         
-             {{-- ///////////////////////// --}}
-          <li class="nav-header">MULTI LEVEL EXAMPLE</li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fas fa-circle nav-icon"></i>
-              <p>Level 1</p>
-            </a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-circle"></i>
-              <p>
-                Level 1
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Level 2</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>
-                    Level 2
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>Level 3</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>Level 3</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>Level 3</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Level 2</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fas fa-circle nav-icon"></i>
-              <p>Level 1</p>
-            </a>
-          </li>
-          <li class="nav-header">LABELS</li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-danger"></i>
-              <p class="text">Important</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-warning"></i>
-              <p>Warning</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-info"></i>
-              <p>Informational</p>
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
+      @endif
+
+      
+      </ul>
+    </nav>
+  </div>
+</aside>

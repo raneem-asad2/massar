@@ -15,7 +15,6 @@ return Application::configure(basePath: dirname(__DIR__))
     })
 
      ->withMiddleware(function (Middleware $middleware) {
-        // Add your route middleware alias here
         $middleware->alias([
             'role' => \App\Http\Middleware\CheckUserRole::class,
         ]);
