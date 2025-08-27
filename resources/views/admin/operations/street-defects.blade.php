@@ -1,4 +1,4 @@
-@extends(view: 'adminlte::page')
+@extends( 'adminlte::page')
 
 @section('title', 'Street Defects')
 
@@ -17,7 +17,6 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        {{-- These headers now match your database schema exactly --}}
                         <th>Defect ID</th>
                         <th>Segment ID</th>
                         <th>Defect Type</th>

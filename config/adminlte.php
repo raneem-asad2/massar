@@ -191,7 +191,7 @@ return [
     |
     */
 
-    'classes_body' => '',
+    'classes_body' => 'classic-theme',
     'classes_brand' => '',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
@@ -265,7 +265,7 @@ return [
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
     'profile_url' => false,
-    'disable_darkmode_routes' => false,
+    'disable_darkmode_routes' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -277,7 +277,7 @@ return [
     */
 
     'page_view' => 'adminlte::page',
-    'top_nav_view' => 'admin.navbar',
+    'top_nav_view' => 'partials.navbar',
     'sidebar_view' => 'adminlte::partials.sidebar.left-sidebar',
 
 
@@ -296,6 +296,23 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Other-Configuration
     |
     */
+    // config/adminlte.php
+
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Panel Classes
+    |--------------------------------------------------------------------------
+    */
+
+    
+
+    'assets' => [
+        'css' => [
+            ['asset' => true, 'location' => 'css/custom-sidebar.css'],
+        ],
+        'js' => [],
+    ],
+
 
     'laravel_asset_bundling' => false,
     'laravel_css_path' => 'css/app.css',
@@ -312,51 +329,80 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Menu-Configuration
     |
     */
+// Top Navbar
 
- 'menu' => [
+'navbar' => [
+    'left' => [
+        [
+            'type' => 'navbar-link',
+            'text' => 'Home',
+            'url'  => 'admin/home',
+            'icon' => 'fas fa-home',
+        ],
+    ],
+    'right' => [
+        [
+            'type' => 'fullscreen-widget',
+            'text' => 'Fullscreen',
+            'icon' => 'fas fa-expand',
+        ],
+        [
+            'type' => 'darkmode-widget',
+            'text' => 'Night Mode',
+            'icon' => 'fas fa-moon',
+        ],
+        [
+            'type' => 'navbar-notification',
+            'id'   => 'my-notification-widget',
+            'icon' => 'fas fa-bell',
+            'url'  => 'notifications/read',
+            'text' => 'Notifications',
+            'label'       => 10,
+            'label_color' => 'danger',
+        ],
+        [
+            'type'       => 'navbar-custom-menu',
+            'text_color' => 'light',
+            'view_name'  => 'partials.my-custom-navbar-menu',
+        ],
+    ],
+],
 
-    // Sidebar items:
+// Sidebar Menu
+'menu' => [
     [
         'type' => 'sidebar-menu-search',
-        'text' => 'search',
+        'text' => 'Search',
     ],
-
     [
-        'text' => 'blog',
+        'text' => 'Blog',
         'url'  => 'admin/blog',
         'can'  => 'manage-blog',
     ],
-
-    ['header' => 'account_settings'],
-
+    ['header' => 'Account Settings'],
     [
-        'text' => 'profile',
+        'text' => 'Profile',
         'url'  => 'admin/settings',
         'icon' => 'fas fa-fw fa-user',
     ],
-
     [
-        'text' => 'change_password',
+        'text' => 'Change Password',
         'url'  => 'admin/settings',
         'icon' => 'fas fa-fw fa-lock',
     ],
-
-    ['header' => 'labels'],
-
+    ['header' => 'Labels'],
     [
-        'text'       => 'important',
+        'text'       => 'Important',
         'icon_color' => 'red',
         'url'        => '#',
     ],
-
     [
-        'text'       => 'warning',
+        'text'       => 'Warning',
         'icon_color' => 'yellow',
         'url'        => '#',
     ],
-
     [
-        'text'       => 'information',
+        'text'       => 'Information',
         'icon_color' => 'cyan',
         'url'        => '#',
     ],
@@ -458,7 +504,7 @@ return [
         [
             'type' => 'css',
             'asset' => true,
-            'location' => 'css/custom.css',
+            'location' => 'css/custom-sidebar.css',
         ],
     ],
 ],

@@ -1,0 +1,73 @@
+/*
+ * ==========================================================================
+ * HIGH-SPECIFICITY CLASSIC ADMINLTE 2.4 SIDEBAR THEME
+ * By using the '.classic-theme' body class, these rules will now override
+ * the default AdminLTE styles.
+ * ==========================================================================
+ */
+
+/* Main Sidebar background color */
+.classic-theme .main-sidebar.sidebar-dark-primary {
+    background-color: #222d32;
+}
+
+/* Reduce width & set fixed width for the content to adjust */
+.classic-theme .sidebar-collapse .main-sidebar,
+.classic-theme .main-sidebar {
+    /* Change this value to make the sidebar thinner or wider */
+    width: 210px;
+}
+
+.classic-theme:not(.sidebar-collapse) .content-wrapper,
+.classic-theme:not(.sidebar-collapse) .main-footer,
+.classic-theme:not(.sidebar-collapse) .main-header {
+    /* This value MUST match the width above */
+    margin-left: 210px;
+}
+
+/* Brand Logo Link */
+.classic-theme .brand-link {
+    border-bottom: 1px solid #4f5962;
+}
+
+/* User Panel text color */
+.classic-theme .user-panel .info .d-block {
+    color: #fff;
+}
+
+/* General Navigation Link text color */
+.classic-theme .nav-sidebar .nav-link p,
+.classic-theme .nav-sidebar .nav-link i {
+    color: #b8c7ce;
+}
+
+/* Navigation Link hover state */
+.classic-theme .nav-sidebar .nav-item:hover > .nav-link {
+    background-color: #1e282c;
+    color: #fff;
+}
+
+.classic-theme .nav-sidebar .nav-item:hover > .nav-link p,
+.classic-theme .nav-sidebar .nav-item:hover > .nav-link i {
+    color: #fff;
+}
+
+/* Active Navigation Link */
+.classic-theme .nav-sidebar .nav-item > .nav-link.active {
+    background-color: #1e282c;
+    color: #fff;
+    border-left: 3px solid #3c8dbc;
+}
+
+.classic-theme .nav-sidebar .nav-item > .nav-link.active p,
+.classic-theme .nav-sidebar .nav-item > .nav-link.active i {
+    color: #fff;
+}
+
+/* Sidebar Search Input */
+.classic-theme .form-control-sidebar,
+.classic-theme .btn-sidebar {
+    background-color: #1a2226;
+    color: #b8c7ce;
+    border: 1px solid transparent;
+}

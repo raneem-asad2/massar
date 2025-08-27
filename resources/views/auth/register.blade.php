@@ -17,7 +17,6 @@
                     <div class="card-body p-4">
                         <h1 class="card-title mb-4 fs-3">Create an account</h1>
 
-                        {{-- ✅ Laravel default register form --}}
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
 

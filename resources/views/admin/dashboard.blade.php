@@ -3,6 +3,7 @@
 @section('title', 'Admin Dashboard')
 
 @section('css')
+{{-- Custom CSS for better visuals --}}
 <style>
     .progress-bar-vertical {
         width: 100%;
@@ -22,12 +23,13 @@
         width: 100%;
     }
 </style>
-@endsection
+    <link rel="stylesheet" href="{{ asset('css/custom-sidebar.css') }}">
 
+@endsection
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid ">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Street Lining Robot Dashboard</h1>
+        <h1 class="h3 mb-0 text-gray-800 my-4">Street Lining Robot Dashboard</h1>
         {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> --}}
     </div>
 
