@@ -56,16 +56,16 @@ Route::middleware(['auth', 'role:admin,editor'])->prefix('admin')->name('admin.'
 
     // Projects and Tasks
     Route::get('/projects', function () {
-        return view('admin.projects-and-tasks.projects');
+        return view('admin.project-management.projects');
     })->name('projects.index');
 
     // Operations
     Route::get('/road-segments', function () {
-        return view('admin.operations.road-segments');
+        return view('admin.project-management.road-segments');
     })->name('road-segments.index');
 
     Route::get('/street-defects', function () {
-        return view('admin.operations.street-defects');
+        return view('admin.project-management.street-defects');
     })->name('street-defects.index');
 
     // Contact
