@@ -1,64 +1,44 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\StreetDefect;
+use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     * @return \Illuminate\View\View
      */
     public function index()
-    {
-        //
-    }
+{
+    $projects = Project::with(['robot', 'staff'])->get();
+    return view('admin.project-management.projects', compact('projects'));
+}
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+public function create()
+{
+    return view('admin.project-management.create-project');
+}
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+public function show(Project $project)
+{
+    $project->load(['robot', 'staff', 'roadSegments']);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+    $streetDefects = StreetDefect::whereIn(
+        'segment_id',
+        $project->roadSegments->pluck('id')
+    )->get();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+    return view('admin.project-management.show-project', compact('project', 'streetDefects'));
+}
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+public function edit(Project $project)
+{
+    return view('admin.project-management.edit-project', compact('project'));
+}
 }

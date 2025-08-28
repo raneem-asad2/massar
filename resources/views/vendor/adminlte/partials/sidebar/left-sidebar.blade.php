@@ -44,17 +44,18 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ route('admin.maintenance.index') }}" class="nav-link">
-            <i class="fas fa-tools nav-icon"></i>
-            <p>Maintenance Records</p>
-          </a>
-        </li>
-        <li class="nav-item">
           <a href="{{ route('admin.projects.index') }}" class="nav-link">
             <i class="fas fa-folder-open nav-icon"></i>
             <p>Projects</p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{ route('admin.maintenance.index') }}" class="nav-link">
+            <i class="fas fa-tools nav-icon"></i>
+            <p>Maintenance Records</p>
+          </a>
+        </li>
+        
         <li class="nav-item">
           <a href="{{ route('admin.road-segments.index') }}" class="nav-link">
             <i class="fas fa-map-marked-alt nav-icon"></i>

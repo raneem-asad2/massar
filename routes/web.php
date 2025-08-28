@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RobotController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -55,9 +56,8 @@ Route::middleware(['auth', 'role:admin,editor'])->prefix('admin')->name('admin.'
     })->name('maintenance.index');
 
     // Projects and Tasks
-    Route::get('/projects', function () {
-        return view('admin.project-management.projects');
-    })->name('projects.index');
+        Route::resource('projects', ProjectController::class);
+
 
     // Operations
     Route::get('/road-segments', function () {
