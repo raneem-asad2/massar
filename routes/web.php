@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RobotController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -21,15 +22,6 @@ Route::view('/contact', 'contact')->name('contact');
 Auth::routes();
 
 
-// --- AUTHENTICATED USER ROUTES ---
-Route::middleware('auth')->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-
 // --- ADMIN ROUTES ---
 Route::middleware(['auth', 'role:admin,editor'])->prefix('admin')->name('admin.')->group(function () {
 
@@ -39,25 +31,23 @@ Route::middleware(['auth', 'role:admin,editor'])->prefix('admin')->name('admin.'
     })->name('dashboard');
 
     // Users
-    Route::get('/users', function () {
-        return view('admin.users.users');
-    })->name('users.index');
+    Route::resource('users', UserController::class);
 
+    // Staff
     Route::get('/staff', function () {
         return view('admin.users.staff');
     })->name('staff.index');
 
-    // Project Management
+    // Robots
     Route::resource('robots', RobotController::class);
 
-
+    // Maintenance
     Route::get('/maintenance', function () {
         return view('admin.project-management.maintenance-records');
     })->name('maintenance.index');
 
-    // Projects and Tasks
-        Route::resource('projects', ProjectController::class);
-
+    // Projects
+    Route::resource('projects', ProjectController::class);
 
     // Operations
     Route::get('/road-segments', function () {
@@ -68,19 +58,14 @@ Route::middleware(['auth', 'role:admin,editor'])->prefix('admin')->name('admin.'
         return view('admin.project-management.street-defects');
     })->name('street-defects.index');
 
-    // Contact
+    // Contact messages
     Route::get('/messages', function () {
         return view('admin.contact-messages');
     })->name('messages.index');
 
-    //profile
-      Route::get('/user-profile', function () {
-        return view('admin.profile');
-    })->name('profile.index');
-
-
-    // Route::get('/messages/{id}', function ($id) {
-    //     return view('admin.contact-messages', ['message_id' => $id]);
-    // })->name('messages.show');
+    // Profile routes
+    Route::get('/user-profile', [ProfileController::class, 'show'])->name('profile.show'); // view
+    Route::get('/user-profile/edit', [ProfileController::class, 'edit'])->name('profile.edit'); // edit form
+    Route::patch('/user-profile', [ProfileController::class, 'update'])->name('profile.update'); // update
+    Route::delete('/user-profile', [ProfileController::class, 'destroy'])->name('profile.destroy'); // delete account
 });
-

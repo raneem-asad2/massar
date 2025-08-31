@@ -92,14 +92,16 @@
           </li>
         @endif
 
-       @if (Auth::user()->role && Auth::user()->role->role_name == 'editor')
-          <li class="nav-item">
-              <a href="{{ route('admin.profile.index') }}" class="nav-link">
-                  <i class="nav-icon fas fa-fw fa-envelope"></i>
-                  <p>profile</p>
-              </a>
-          </li>
+       @if(Auth::user()->role && in_array(Auth::user()->role->role_name, ['admin','editor']))
+      <li class="nav-item">
+          <a href="{{ route('admin.profile.show') }}" class="nav-link">
+              <i class="nav-icon fas fa-fw fa-user"></i>
+              <p>Profile</p>
+          </a>
+      </li>
       @endif
+
+
 
       
       </ul>
