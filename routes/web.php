@@ -7,7 +7,10 @@ use App\Http\Controllers\RobotController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\MaintenanceRecordController;
+use App\Http\Controllers\RoadSegmentController;
+use App\Http\Controllers\StreetDefectController;
+use App\Http\Controllers\ContactMessageController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -69,3 +72,9 @@ Route::middleware(['auth', 'role:admin,editor'])->prefix('admin')->name('admin.'
     Route::patch('/user-profile', [ProfileController::class, 'update'])->name('profile.update'); // update
     Route::delete('/user-profile', [ProfileController::class, 'destroy'])->name('profile.destroy'); // delete account
 });
+
+Route::resource('maintenance-records', MaintenanceRecordController::class);
+Route::resource('road-segments', RoadSegmentController::class);
+Route::resource('street-defects', StreetDefectController::class);
+Route::resource('contact-messages', ContactMessageController::class);
+  
