@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('staff_id')->nullable();
 
             $table->date('assignment_date');
-            $table->date( 'completion_date');
+            $table->date( 'completion_date')->nullable();
             
             $table->timestamps();
 

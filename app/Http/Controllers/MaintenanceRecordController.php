@@ -12,14 +12,14 @@ class MaintenanceRecordController extends Controller
     public function index()
     {
         $records = MaintenanceRecord::with(['staff', 'robot'])->get();
-        return view('maintenance_records.index', compact('records'));
+        return view('admin.project-management.maintenance-records', compact('records'));
     }
 
     public function create()
     {
         $staff = Staff::all();
         $robots = Robot::all();
-        return view('maintenance_records.create', compact('staff', 'robots'));
+        return view('admin.project-management.create-maintenance-records', compact('staff', 'robots'));
     }
 
     public function store(Request $request)
@@ -34,20 +34,20 @@ class MaintenanceRecordController extends Controller
 
         MaintenanceRecord::create($validated);
 
-        return redirect()->route('maintenance-records.index')
+        return redirect()->route('admin.maintenance-records.index')
                          ->with('success', 'Maintenance record created successfully.');
     }
 
     public function show(MaintenanceRecord $maintenanceRecord)
     {
-        return view('maintenance_records.show', compact('maintenanceRecord'));
+        return view('admin.project-management.show-maintenance-records', compact('maintenanceRecord'));
     }
 
     public function edit(MaintenanceRecord $maintenanceRecord)
     {
         $staff = Staff::all();
         $robots = Robot::all();
-        return view('maintenance_records.edit', compact('maintenanceRecord', 'staff', 'robots'));
+        return view('admin.project-management.edit-maintenance-records', compact('maintenanceRecord', 'staff', 'robots'));
     }
 
     public function update(Request $request, MaintenanceRecord $maintenanceRecord)
@@ -62,7 +62,7 @@ class MaintenanceRecordController extends Controller
 
         $maintenanceRecord->update($validated);
 
-        return redirect()->route('maintenance-records.index')
+        return redirect()->route('admin.maintenance-records.index')
                          ->with('success', 'Maintenance record updated successfully.');
     }
 
@@ -70,7 +70,7 @@ class MaintenanceRecordController extends Controller
     {
         $maintenanceRecord->delete();
 
-        return redirect()->route('maintenance-records.index')
+        return redirect()->route('admin.maintenance-records.index')
                          ->with('success', 'Maintenance record deleted successfully.');
     }
 }

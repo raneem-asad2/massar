@@ -10,12 +10,12 @@ class ContactMessageController extends Controller
     public function index()
     {
         $messages = ContactMessage::all();
-        return view('contact_messages.index', compact('messages'));
+        return view('admin.users.contact-messages', compact('messages'));
     }
 
     public function create()
     {
-        return view('contact_messages.create');
+        return view('admin.users.create-contact-messages');
     }
 
     public function store(Request $request)
@@ -28,17 +28,17 @@ class ContactMessageController extends Controller
 
         ContactMessage::create($request->all());
 
-        return redirect()->route('contact-messages.index')->with('success', 'Message created.');
+        return redirect()->route('admin.contact-messages.index')->with('success', 'Message created.');
     }
 
     public function show(ContactMessage $contactMessage)
     {
-        return view('contact_messages.show', compact('contactMessage'));
+        return view('admin.users.show-contact-messages', compact('contactMessage'));
     }
 
     public function edit(ContactMessage $contactMessage)
     {
-        return view('contact_messages.edit', compact('contactMessage'));
+        return view('admin.users.edit-contact-messages', compact('contactMessage'));
     }
 
     public function update(Request $request, ContactMessage $contactMessage)
@@ -51,12 +51,12 @@ class ContactMessageController extends Controller
 
         $contactMessage->update($request->all());
 
-        return redirect()->route('contact-messages.index')->with('success', 'Message updated.');
+        return redirect()->route('admin.contact-messages.index')->with('success', 'Message updated.');
     }
 
     public function destroy(ContactMessage $contactMessage)
     {
         $contactMessage->delete();
-        return redirect()->route('contact-messages.index')->with('success', 'Message deleted.');
+        return redirect()->route('admin.contact-messages.index')->with('success', 'Message deleted.');
     }
 }

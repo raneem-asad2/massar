@@ -9,7 +9,7 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <form action="{{ route('street-defects.store') }}" method="POST">
+        <form action="{{ route('admin.street-defects.store') }}" method="POST">
             @csrf
 
             <div class="form-group">
@@ -38,7 +38,7 @@
             </div>
 
             <button type="submit" class="btn btn-success">Save</button>
-            <a href="{{ route('street-defects.index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ route('admin.street-defects.index') }}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 </div>

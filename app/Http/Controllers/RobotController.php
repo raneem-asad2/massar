@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Controllers\QueryException;
+use Illuminate\Database\QueryException;
 use App\Models\Robot;
 use Illuminate\Http\Request;
 
@@ -50,8 +50,7 @@ class RobotController extends Controller
      */
     public function show(string $id)
     {
-        $robot = Robot::findOrFail($id);
-        // Fix: Returning the correct view name and passing the robot object.
+        $robot = Robot::with('projects.roadSegments')->findOrFail($id);
         return view('admin.project-management.show-robot', compact('robot'));
     }
 
@@ -88,8 +87,9 @@ class RobotController extends Controller
     }
 
     public function destroy(Robot $robot)
-{
-    $robot->delete();
-  }
+    {
+        $robot->delete();
+        return redirect()->route('admin.robots.index')->with('success', 'Robot deleted successfully!');
+    }
 
 }

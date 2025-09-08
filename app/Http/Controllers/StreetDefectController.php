@@ -11,13 +11,13 @@ class StreetDefectController extends Controller
     public function index()
     {
         $defects = StreetDefect::all();
-        return view('street_defects.index', compact('defects'));
+        return view('admin.project-management.street-defects', compact('defects'));
     }
 
     public function create()
     {
         $segments = RoadSegment::all();
-        return view('street_defects.create', compact('segments'));
+        return view('admin.project-management.create-street-defects', compact('segments'));
     }
 
     public function store(Request $request)
@@ -31,18 +31,18 @@ class StreetDefectController extends Controller
         ]);
 
         StreetDefect::create($request->all());
-        return redirect()->route('street-defects.index')->with('success', 'Street defect created.');
+        return redirect()->route('admin.street_defects.index')->with('success', 'Street defect created.');
     }
 
     public function show(StreetDefect $streetDefect)
     {
-        return view('street_defects.show', compact('streetDefect'));
+        return view('admin.project-management.show-street-defects', compact('streetDefect'));
     }
 
     public function edit(StreetDefect $streetDefect)
     {
         $segments = RoadSegment::all();
-        return view('street_defects.edit', compact('streetDefect', 'segments'));
+        return view('admin.project-management.edit-street-defects', compact('streetDefect', 'segments'));
     }
 
     public function update(Request $request, StreetDefect $streetDefect)
@@ -56,12 +56,12 @@ class StreetDefectController extends Controller
         ]);
 
         $streetDefect->update($request->all());
-        return redirect()->route('street-defects.index')->with('success', 'Street defect updated.');
+        return redirect()->route('admin.street-defects.index')->with('success', 'Street defect updated.');
     }
 
     public function destroy(StreetDefect $streetDefect)
     {
         $streetDefect->delete();
-        return redirect()->route('street-defects.index')->with('success', 'Street defect deleted.');
+        return redirect()->route('admin.street-defects.index')->with('success', 'Street defect deleted.');
     }
 }

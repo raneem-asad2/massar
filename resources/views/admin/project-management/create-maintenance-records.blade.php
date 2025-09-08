@@ -10,7 +10,7 @@
 <div class="card">
     <div class="card-body">
         {{-- Create form --}}
-        <form action="{{ route('maintenance-records.store') }}" method="POST">
+        <form action="{{ route('admin.maintenance-records.store') }}" method="POST">
             @csrf
 
             <div class="form-group">
@@ -44,7 +44,7 @@
             </div>
 
             <button type="submit" class="btn btn-success">Save</button>
-            <a href="{{ route('maintenance-records.index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ route('admin.maintenance-records.index') }}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 </div>

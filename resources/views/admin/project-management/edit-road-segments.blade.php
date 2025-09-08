@@ -9,7 +9,7 @@
 @section('content')
 <div class="card">
     <div class="card-body">
-        <form action="{{ route('road-segments.update', $roadSegment->id) }}" method="POST">
+        <form action="{{ route('admin.road-segments.update', $roadSegment->id) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -49,7 +49,7 @@
             </div>
 
             <button type="submit" class="btn btn-success">Update</button>
-            <a href="{{ route('road-segments.index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ route('admin.road-segments.index') }}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 </div>

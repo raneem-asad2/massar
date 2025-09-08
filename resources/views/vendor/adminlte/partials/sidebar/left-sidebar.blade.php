@@ -1,26 +1,19 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-  {{-- Brand Logo --}}
   <a href="{{ route('admin.dashboard') }}" class="brand-link">
-    <img src="{{ asset('assets/img/robot (2).png') }}" alt="Massar Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    {{-- <img src="{{ asset('assets/img/robot (2).png') }}" alt="Massar Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> --}}
     <span class="brand-text font-weight-light">Massar Project</span>
   </a>
 
-  {{-- Sidebar Container --}}
   <div class="sidebar">
 
-    {{-- 1. USER PANEL (IMPROVED AND PRETTIER) --}}
     <div class="user-panel mt-3 pb-3 mb-3 d-flex align-items-center">
       <div class="image">
-        {{-- This now generates a modern avatar with the user's initials, which looks much better than the default. --}}
         <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=222d32&color=fff" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        {{-- This logic ensures we NEVER show a long, ugly email address. --}}
         @if (Auth::user()->name && Auth::user()->name !== Auth::user()->email)
-            {{-- If a proper name is set, display it. --}}
             <a href="#" class="d-block">{{ Auth::user()->name }}</a>
         @else
-            {{-- Otherwise, show the user's role or a default "User" title. --}}
             <a href="#" class="d-block">{{ ucfirst(optional(Auth::user()->role)->role_name) ?? 'User' }}</a>
         @endif
         
@@ -50,7 +43,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ route('admin.maintenance.index') }}" class="nav-link">
+          <a href="{{ route('admin.maintenance-records.index') }}" class="nav-link">
             <i class="fas fa-tools nav-icon"></i>
             <p>Maintenance Records</p>
           </a>
@@ -85,7 +78,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('admin.messages.index') }}" class="nav-link">
+            <a href="{{ route('admin.contact-messages.index') }}" class="nav-link">
               <i class="nav-icon fas fa-fw fa-envelope"></i>
               <p>Contact Messages</p>
             </a>

@@ -20,7 +20,7 @@ class Project extends Model
 
     public function robot()
     {
-        return $this->hasOne(Robot::class, 'id', 'robot_id');
+        return $this->belongsTo(Robot::class, 'robot_id');
     }
 
     public function staff()

@@ -3,7 +3,6 @@
 @section('title', 'Admin Dashboard')
 
 @section('css')
-{{-- Custom CSS for better visuals --}}
 <style>
     .progress-bar-vertical {
         width: 100%;
@@ -15,25 +14,21 @@
     .progress-bar-vertical .progress-bar {
         width: 100%;
         height: 0;
-        -webkit-transition: height 0.6s ease;
-        -o-transition: height 0.6s ease;
         transition: height 0.6s ease;
     }
     .info-box .progress .progress-bar {
         width: 100%;
     }
 </style>
-    <link rel="stylesheet" href="{{ asset('css/custom-sidebar.css') }}">
-
+<link rel="stylesheet" href="{{ asset('css/custom-sidebar.css') }}">
 @endsection
+
 @section('content')
-<div class="container-fluid ">
+<div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800 my-4">Street Lining Robot Dashboard</h1>
-        {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> --}}
     </div>
 
-    <!-- Top Info Widgets -->
     <div class="row">
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
@@ -41,7 +36,9 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Robots Online</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">4 / 10</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ $robots->where('robot_status', '!=', 'Offline')->count() }} / {{ $robots->count() }}
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-robot fa-2x text-gray-300"></i>
@@ -57,7 +54,9 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Distance Painted (Today)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">148 KM</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ number_format(collect($tasksCompletedPerDay)->sum() * 2, 0) }} KM
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-road fa-2x text-gray-300"></i>
@@ -75,11 +74,14 @@
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks Progress</div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">75%</div>
+                                    @php
+                                        $progress = round(collect($tasksCompletedPerDay)->sum() / (7*10) * 100);
+                                    @endphp
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $progress }}%</div>
                                 </div>
                                 <div class="col">
                                     <div class="progress progress-sm mr-2">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: {{ $progress }}%" aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +100,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">System Alerts</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">2 Active</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ count($systemAlerts) }} Active</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
@@ -109,10 +111,8 @@
         </div>
     </div>
 
-    <!-- Main Content Row -->
     <div class="row">
         <div class="col-lg-8">
-            <!-- Daily Performance Line Chart -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Daily Performance (Tasks Completed)</h6>
@@ -124,14 +124,13 @@
                 </div>
             </div>
 
-            <!-- Live Robot Fleet Status Table -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Live Robot Fleet Status</h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-hover" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>Robot ID</th>
@@ -142,50 +141,34 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($robots as $robot)
                                 <tr>
-                                    <td>Robot_01</td>
-                                    <td><span class="badge badge-success">Painting</span></td>
+                                    <td>{{ $robot->serial_number }}</td>
+                                    <td>
+                                        @php
+                                            $statusColor = match($robot->robot_status) {
+                                                'Painting' => 'success',
+                                                'Charging' => 'info',
+                                                'Idle' => 'warning',
+                                                'Error' => 'danger',
+                                                default => 'secondary',
+                                            };
+                                        @endphp
+                                        <span class="badge badge-{{ $statusColor }}">{{ $robot->robot_status }}</span>
+                                    </td>
                                     <td>
                                         <div class="progress" style="height: 20px;">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: 85%;" aria-valuenow="85">85%</div>
+                                            <div class="progress-bar bg-{{ $statusColor }}" role="progressbar" 
+                                                 style="width: {{ $robot->charge_level ?? 0 }}%;" 
+                                                 aria-valuenow="{{ $robot->charge_level ?? 0 }}" aria-valuemin="0" aria-valuemax="100">
+                                                 {{ $robot->charge_level ?? 0 }}%
+                                            </div>
                                         </div>
                                     </td>
-                                    <td>Main Street - Section A</td>
-                                    <td><a href="#" class="btn btn-sm btn-outline-primary">View Details</a></td>
+                                    <td>{{ $robot->current_task?->name ?? 'Awaiting Task' }}</td>
+                                    <td><a href="{{ route('admin.robots.show', $robot->id) }}" class="btn btn-sm btn-outline-primary">View Details</a></td>
                                 </tr>
-                                <tr>
-                                    <td>Robot_02</td>
-                                    <td><span class="badge badge-info">Charging</span></td>
-                                    <td>
-                                        <div class="progress" style="height: 20px;">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 45%;" aria-valuenow="45">45%</div>
-                                        </div>
-                                    </td>
-                                    <td>Charging Bay 2</td>
-                                    <td><a href="#" class="btn btn-sm btn-outline-primary">View Details</a></td>
-                                </tr>
-                                <tr>
-                                    <td>Robot_03</td>
-                                    <td><span class="badge badge-danger">Error</span></td>
-                                    <td>
-                                        <div class="progress" style="height: 20px;">
-                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 22%;" aria-valuenow="22">22%</div>
-                                        </div>
-                                    </td>
-                                    <td>Paint Tank Empty</td>
-                                    <td><a href="#" class="btn btn-sm btn-outline-primary">View Details</a></td>
-                                </tr>
-                                <tr>
-                                    <td>Robot_04</td>
-                                    <td><span class="badge badge-warning">Idle</span></td>
-                                    <td>
-                                        <div class="progress" style="height: 20px;">
-                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 77%;" aria-valuenow="77">77%</div>
-                                        </div>
-                                    </td>
-                                    <td>Awaiting Task</td>
-                                    <td><a href="#" class="btn btn-sm btn-outline-primary">View Details</a></td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -194,7 +177,6 @@
         </div>
 
         <div class="col-lg-4">
-            <!-- Fleet Overview Donut Chart -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Fleet Overview</h6>
@@ -204,37 +186,46 @@
                         <canvas id="robotStatusDonutChart"></canvas>
                     </div>
                     <div class="mt-4 text-center small">
-                        <span class="mr-2"><i class="fas fa-circle text-success"></i> Painting</span>
-                        <span class="mr-2"><i class="fas fa-circle text-info"></i> Charging</span>
-                        <span class="mr-2"><i class="fas fa-circle text-warning"></i> Idle</span>
-                        <span class="mr-2"><i class="fas fa-circle text-danger"></i> Error</span>
+                        @foreach($robotStatusCounts as $status => $count)
+                            @php
+                                $colorClass = match($status) {
+                                    'Painting' => 'success',
+                                    'Charging' => 'info',
+                                    'Idle' => 'warning',
+                                    'Error' => 'danger',
+                                    default => 'secondary',
+                                };
+                            @endphp
+                            <span class="mr-2"><i class="fas fa-circle text-{{ $colorClass }}"></i> {{ $status }}</span>
+                        @endforeach
                     </div>
                 </div>
             </div>
 
-            <!-- System Alerts -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">System Alerts</h6>
                 </div>
                 <div class="card-body">
                    <ul class="list-group list-group-flush">
+                        @foreach($systemAlerts as $alert)
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <div>
-                                <i class="fas fa-battery-quarter text-danger mr-2"></i>
-                                <strong>Robot_03: Low Battery</strong>
-                                <small class="d-block text-muted">22% remaining. Needs charging soon.</small>
+                                <i class="{{ $alert['icon'] }} mr-2"></i>
+                                <strong>{{ $alert['robot_id'] }}: {{ $alert['title'] }}</strong>
+                                <small class="d-block text-muted">{{ $alert['details'] }}</small>
                             </div>
-                            <span class="badge badge-danger badge-pill">Critical</span>
+                            @php
+                                $badgeColor = match(strtolower($alert['level'])) {
+                                    'critical' => 'danger',
+                                    'high' => 'warning',
+                                    'medium' => 'info',
+                                    default => 'secondary',
+                                };
+                            @endphp
+                            <span class="badge badge-{{ $badgeColor }} badge-pill">{{ $alert['level'] }}</span>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div>
-                                <i class="fas fa-fill-drip text-warning mr-2"></i>
-                                <strong>Robot_03: Paint Tank Empty</strong>
-                                <small class="d-block text-muted">Error logged 1 hour ago.</small>
-                            </div>
-                            <span class="badge badge-warning badge-pill">High</span>
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

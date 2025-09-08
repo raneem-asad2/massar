@@ -39,7 +39,11 @@
                     {{ $robot->last_maintenance_date ? \Carbon\Carbon::parse($robot->last_maintenance_date)->format('F d, Y') : 'N/A' }}
                 </dd>
             </dl>
+
+            {{-- Map --}}
+            <div id="map" style="height: 400px; margin-top:20px;"></div>
         </div>
+
         <div class="card-footer d-flex justify-content-between bg-white">
             <a href="{{ route('admin.robots.index') }}" class="btn btn-outline-secondary">
                 <i class="fas fa-arrow-left mr-1"></i> Back
@@ -49,4 +53,80 @@
             </a>
         </div>
     </div>
+    console.log(segments);
+
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 400px;
+            margin-top: 20px;
+        }
+    </style>
+@stop
+
+@section('content')
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{{ $robot->robot_name }}</h3>
+        </div>
+
+        <div class="card-body">
+            {{-- Map --}}
+            <div id="map"></div>
+        </div>
+
+        <div class="card-footer d-flex justify-content-between bg-white">
+            <a href="{{ route('admin.robots.index') }}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left mr-1"></i> Back
+            </a>
+            <a href="{{ route('admin.robots.edit', $robot->id) }}" class="btn btn-outline-warning">
+                <i class="fas fa-edit mr-1"></i> Edit
+            </a>
+        </div>
+    </div>
+@stop
+
+@section('js')
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const mapEl = document.getElementById('map');
+            if (!mapEl) return;
+
+            let map = L.map('map').setView([31.95, 35.91], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            let segments = @json($robot->projects->flatMap->roadSegments);
+
+            if (segments.length > 0) {
+                let allCoords = [];
+
+                segments.forEach(seg => {
+                    if (seg.start_coordinates && seg.end_coordinates) {
+                        let start = seg.start_coordinates.split(",").map(Number);
+                        let end = seg.end_coordinates.split(",").map(Number);
+
+                        let polyline = L.polyline([start, end], { color: 'blue' }).addTo(map);
+                        polyline.bindPopup(seg.segment_name + " (" + seg.status + ")");
+                        allCoords.push(start, end);
+                    }
+                });
+
+                if (allCoords.length > 0) {
+                    map.fitBounds(allCoords);
+                }
+            } else {
+                // No segments: show popup in center
+                L.popup()
+                 .setLatLng([31.95, 35.91])
+                 .setContent("<b>No road segments available</b>")
+                 .openOn(map);
+            }
+        });
+    </script>
 @stop

@@ -11,13 +11,13 @@ class RoadSegmentController extends Controller
     public function index()
     {
         $segments = RoadSegment::all();
-        return view('road_segments.index', compact('segments'));
+        return view('admin.project-management.road-segments', compact('segments'));
     }
 
     public function create()
     {
         $projects = Project::all();
-        return view('road_segments.create', compact('projects'));
+        return view('admin.project-management.create-road-segment', compact('projects')); // Corrected view name
     }
 
     public function store(Request $request)
@@ -33,18 +33,18 @@ class RoadSegmentController extends Controller
         ]);
 
         RoadSegment::create($request->all());
-        return redirect()->route('road-segments.index')->with('success', 'Road segment created.');
+        return redirect()->route('admin.road-segments.index')->with('success', 'Road segment created successfully!');
     }
 
     public function show(RoadSegment $roadSegment)
     {
-        return view('road_segments.show', compact('roadSegment'));
+        return view('admin.project-management.show-road-segments', compact('roadSegment'));
     }
 
     public function edit(RoadSegment $roadSegment)
     {
         $projects = Project::all();
-        return view('road_segments.edit', compact('roadSegment', 'projects'));
+        return view('admin.project-management.edit-road-segments', compact('roadSegment', 'projects'));
     }
 
     public function update(Request $request, RoadSegment $roadSegment)
@@ -60,12 +60,12 @@ class RoadSegmentController extends Controller
         ]);
 
         $roadSegment->update($request->all());
-        return redirect()->route('road-segments.index')->with('success', 'Road segment updated.');
+        return redirect()->route('admin.road-segments.index')->with('success', 'Road segment updated.');
     }
 
     public function destroy(RoadSegment $roadSegment)
     {
         $roadSegment->delete();
-        return redirect()->route('road-segments.index')->with('success', 'Road segment deleted.');
+        return redirect()->route('admin.road-segments.index')->with('success', 'Road segment deleted.');
     }
 }

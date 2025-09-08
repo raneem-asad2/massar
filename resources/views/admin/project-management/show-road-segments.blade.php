@@ -18,8 +18,8 @@
         <p><strong>Description:</strong> {{ $roadSegment->description }}</p>
         <p><strong>Project ID:</strong> {{ $roadSegment->project_id }}</p>
 
-        <a href="{{ route('road-segments.edit', $roadSegment->id) }}" class="btn btn-warning mt-3">Edit</a>
-        <a href="{{ route('road-segments.index') }}" class="btn btn-secondary mt-3">Back</a>
+        <a href="{{ route('admin.road-segments.edit', $roadSegment->id) }}" class="btn btn-warning mt-3">Edit</a>
+        <a href="{{ route('admin.road-segments.index') }}" class="btn btn-secondary mt-3">Back</a>
     </div>
 </div>
 @stop

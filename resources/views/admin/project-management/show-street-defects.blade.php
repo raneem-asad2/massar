@@ -16,8 +16,8 @@
         <p><strong>Status:</strong> {{ $streetDefect->status }}</p>
         <p><strong>Segment ID:</strong> {{ $streetDefect->segment_id }}</p>
 
-        <a href="{{ route('street-defects.edit', $streetDefect->id) }}" class="btn btn-warning mt-3">Edit</a>
-        <a href="{{ route('street-defects.index') }}" class="btn btn-secondary mt-3">Back</a>
+        <a href="{{ route('admin.street-defects.edit', $streetDefect->id) }}" class="btn btn-warning mt-3">Edit</a>
+        <a href="{{ route('admin.street-defects.index') }}" class="btn btn-secondary mt-3">Back</a>
     </div>
 </div>
 @stop
