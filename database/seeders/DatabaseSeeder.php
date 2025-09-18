@@ -17,7 +17,15 @@ class DatabaseSeeder extends Seeder
         $this->call([RoleSeeder::class]);
 
         $staff = Staff::factory(5)->create();
-        $robots = Robot::factory(5)->create();
+        
+        $robots = Robot::factory(5)->create()->each(function ($robot) {
+        $lat = fake()->latitude(31.9, 32.1);
+        $lng = fake()->longitude(35.8, 36.0);
+
+        $robot->update([
+            'current_location' => "{$lat},{$lng}", // stored as "lat,lng"
+        ]);
+    });
 
         $projects = Project::factory(10)->state(function () use ($robots, $staff) {
             return [

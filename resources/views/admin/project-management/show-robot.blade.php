@@ -88,7 +88,6 @@
         </div>
     </div>
 @stop
-
 @section('js')
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
@@ -96,35 +95,29 @@
             const mapEl = document.getElementById('map');
             if (!mapEl) return;
 
+            // Default view
             let map = L.map('map').setView([31.95, 35.91], 13);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap contributors'
             }).addTo(map);
 
-            let segments = @json($robot->projects->flatMap->roadSegments);
+            // Robot location from backend
+            let location = @json($robot->current_location);
 
-            if (segments.length > 0) {
-                let allCoords = [];
+            if (location) {
+                let coords = location.split(",").map(Number);
 
-                segments.forEach(seg => {
-                    if (seg.start_coordinates && seg.end_coordinates) {
-                        let start = seg.start_coordinates.split(",").map(Number);
-                        let end = seg.end_coordinates.split(",").map(Number);
+                // Add marker
+                let marker = L.marker(coords).addTo(map);
+                marker.bindPopup("<b>{{ $robot->robot_name }}</b><br>Status: {{ $robot->robot_status }}");
 
-                        let polyline = L.polyline([start, end], { color: 'blue' }).addTo(map);
-                        polyline.bindPopup(seg.segment_name + " (" + seg.status + ")");
-                        allCoords.push(start, end);
-                    }
-                });
-
-                if (allCoords.length > 0) {
-                    map.fitBounds(allCoords);
-                }
+                // Center map on robot
+                map.setView(coords, 15);
             } else {
-                // No segments: show popup in center
+                // No location available
                 L.popup()
                  .setLatLng([31.95, 35.91])
-                 .setContent("<b>No road segments available</b>")
+                 .setContent("<b>No robot location available</b>")
                  .openOn(map);
             }
         });

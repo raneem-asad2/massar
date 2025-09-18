@@ -201,37 +201,34 @@
                     </div>
                 </div>
             </div>
-
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">System Alerts</h6>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">System Alerts</h6>
+    </div>
+    <div class="card-body">
+       <ul class="list-group list-group-flush">
+            @foreach($systemAlerts as $alert)
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="{{ $alert['icon'] }} mr-2"></i>
+                    <strong>{{ $alert['robot_id'] }}: {{ $alert['title'] }}</strong>
+                    <small class="d-block text-muted">{{ $alert['details'] }}</small>
                 </div>
-                <div class="card-body">
-                   <ul class="list-group list-group-flush">
-                        @foreach($systemAlerts as $alert)
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div>
-                                <i class="{{ $alert['icon'] }} mr-2"></i>
-                                <strong>{{ $alert['robot_id'] }}: {{ $alert['title'] }}</strong>
-                                <small class="d-block text-muted">{{ $alert['details'] }}</small>
-                            </div>
-                            @php
-                                $badgeColor = match(strtolower($alert['level'])) {
-                                    'critical' => 'danger',
-                                    'high' => 'warning',
-                                    'medium' => 'info',
-                                    default => 'secondary',
-                                };
-                            @endphp
-                            <span class="badge badge-{{ $badgeColor }} badge-pill">{{ $alert['level'] }}</span>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div>
+                @php
+                    $badgeColor = match(strtolower($alert['level'])) {
+                        'critical' => 'danger',
+                        'high' => 'warning',
+                        'medium' => 'info',
+                        default => 'secondary',
+                    };
+                @endphp
+                <span class="badge badge-{{ $badgeColor }} badge-pill">{{ $alert['level'] }}</span>
+            </li>
+            @endforeach
+        </ul>
     </div>
 </div>
+
 @endsection
 
 @section('js')
