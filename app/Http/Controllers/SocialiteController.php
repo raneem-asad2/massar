@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
-use Illuminate\Support\Str;
 
 class SocialiteController extends Controller
 {
@@ -16,42 +14,48 @@ class SocialiteController extends Controller
         return Socialite::driver('google')->redirect();
     }
 
-    // Handle callback from Google
+    // Handle Google callback
     public function handleGoogleCallback()
-{
-    try {
-        // Use stateless() to avoid state issues in local development
-        $googleUser = Socialite::driver('google')->stateless()->user();
-    } catch (\Exception $e) {
-        return redirect()->route('login')->withErrors('Google login failed. Please try again.');
-    }
+    {
+        try {
+            $googleUser = Socialite::driver('google')->stateless()->user();
+        } catch (\Exception $e) {
+            return redirect()->route('login')->withErrors('Google login failed. Please try again.');
+        }
 
-    // Check if user already exists by Google ID or email
-    $user = User::where('google_id', $googleUser->getId())
-                ->orWhere('email', $googleUser->getEmail())
-                ->first();
+        $user = User::where('email', $googleUser->getEmail())->first();
 
-    if (!$user) {
-        // Create new user if not exists
-        $user = User::create([
-            'name'       => $googleUser->getName(),
-            'email'      => $googleUser->getEmail(),
-            'google_id'  => $googleUser->getId(),
-            'password'   => bcrypt(Str::random(16)), // random password
-            'role_id'    => 3, // default role_id
-        ]);
-    }
+        if ($user) {
+            // Link Google account if not already linked
+            if (!$user->google_id) {
+                $user->google_id = $googleUser->getId();
+                $user->save();
+            }
+        } else {
+            // New user -> no password yet
+            $user = User::create([
+                'name'      => $googleUser->getName(),
+                'email'     => $googleUser->getEmail(),
+                'google_id' => $googleUser->getId(),
+                'role_id'   => 3, // default role
+                'password'  => null, // leave password NULL for now
+            ]);
+        }
 
-    // Log in the user
-    Auth::login($user);
+        // Redirect to set password if no password
+        if (!$user->password) {
+            session(['google_user_id' => $user->id]);
+            return redirect()->route('password.form');
+        }
 
-    // Redirect based on role
-    $role = $user->role; // use the relationship
-    if ($role && $role->role_name === 'admin') {
-        return redirect()->route('admin.dashboard');
-    } else {
+        // Log in if password exists
+        Auth::login($user);
+
+        // Redirect based on role
+        if ($user->role && $user->role->role_name === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+
         return redirect()->route('home.public');
     }
-}
-
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -53,10 +54,12 @@ Route::middleware(['auth', 'role:admin,editor'])->prefix('admin')->name('admin.'
     Route::delete('/user-profile', [ProfileController::class, 'destroy'])->name('profile.destroy'); // delete account
 });
 
-Route::get('auth/google/callback', [SocialiteController::class, 'handleGoogleCallback'])->name('auth.google-callback');
+Route::get('auth/google', [SocialiteController::class, 'googleLogin'])->name('google.login');
+Route::get('auth/google/callback', [SocialiteController::class, 'handleGoogleCallback'])->name('google.callback');
 
-Route::get('auth/google',[SocialiteController::class,'googleLogin'])->name('auth.google');
-
+// routes/web.php
+    Route::get('/set-password', [PasswordController::class, 'showForm'])->name('password.form');
+    Route::post('/set-password', [PasswordController::class, 'set'])->name('password.set');
 
 
 

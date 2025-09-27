@@ -34,7 +34,7 @@
             </div>
 
             <div class="text-center">
-                <a href="{{ route('auth.google')}}" class="btn w-100 py-2 mb-3 d-flex align-items-center justify-content-center"
+                <a href="{{ route('google.login')}}" class="btn w-100 py-2 mb-3 d-flex align-items-center justify-content-center"
                 style="background-color: #353535; color: #fff; border-radius: 8px;">
                     <i class="bi bi-google me-2"></i> Continue with Google
                 </a>

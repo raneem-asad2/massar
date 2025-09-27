@@ -33,7 +33,7 @@ class LoginController extends Controller
         } elseif ($role === 'editor') {
             return '/admin/dashboard';
         } else {
-            return '/home';
+            return '/';
         }
     }
 }
