@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RobotController;
+use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -51,6 +52,10 @@ Route::middleware(['auth', 'role:admin,editor'])->prefix('admin')->name('admin.'
     Route::patch('/user-profile', [ProfileController::class, 'update'])->name('profile.update'); // update
     Route::delete('/user-profile', [ProfileController::class, 'destroy'])->name('profile.destroy'); // delete account
 });
+
+Route::get('auth/google/callback', [SocialiteController::class, 'handleGoogleCallback'])->name('auth.google-callback');
+
+Route::get('auth/google',[SocialiteController::class,'googleLogin'])->name('auth.google');
 
 
 
