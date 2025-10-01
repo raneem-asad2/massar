@@ -8,6 +8,7 @@
 
 @section('content')
 <div class="container-fluid">
+    {{-- Success / Error Messages --}}
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
             {{ session('success') }}
@@ -28,11 +29,12 @@
 
     <div class="card shadow-sm border-0">
         <div class="card-header bg-white d-flex justify-content-between align-items-center">
-            <h3 class="card-title mb-0">All Maintenance Records</h3>
-            <a href="{{ route('admin.maintenance-records.create') }}" class="btn btn-outline-primary btn-sm">
+            <h3 class="card-title mb-0 font-weight-bold text-dark">All Maintenance Records</h3>
+            <a href="{{ route('admin.maintenance-records.create') }}" class="btn btn-outline-primary btn-sm px-3">
                 <i class="fas fa-plus mr-1"></i> Add Record
             </a>
         </div>
+
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover align-middle">
@@ -52,8 +54,8 @@
                         <tr>
                             <td>{{ $record->id }}</td>
                             <td>{{ $record->staff->name ?? 'N/A' }}</td>
-                            <td>{{ $record->robot->name ?? 'N/A' }}</td>
-                            <td>{{ $record->maintenance_date }}</td>
+                            <td>{{ $record->robot->robot_name ?? 'N/A' }}</td>
+                            <td>{{ \Carbon\Carbon::parse($record->maintenance_date)->format('M d, Y') }}</td>
                             <td>{{ Str::limit($record->description, 40) }}</td>
                             <td>
                                 <span class="badge badge-info">
@@ -61,19 +63,21 @@
                                 </span>
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('admin.maintenance-records.show', $record->id) }}" class="btn btn-outline-info btn-sm mr-1">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="{{ route('admin.maintenance-records.edit', $record->id) }}" class="btn btn-outline-warning btn-sm mr-1">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form action="{{ route('admin.maintenance-records.destroy', $record->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this record?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </form>
+                                <div class="btn-group" role="group">
+                                    <a href="{{ route('admin.maintenance-records.show', $record->id) }}" class="btn btn-outline-info btn-sm">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{{ route('admin.maintenance-records.edit', $record->id) }}" class="btn btn-outline-warning btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ route('admin.maintenance-records.destroy', $record->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this record?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         @empty

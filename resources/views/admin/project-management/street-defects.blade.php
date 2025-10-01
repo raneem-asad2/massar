@@ -29,8 +29,8 @@
 
     <div class="card shadow-sm border-0">
         <div class="card-header bg-white d-flex justify-content-between align-items-center">
-            <h3 class="card-title mb-0">Reported Defects</h3>
-            <a href="{{ route('admin.street-defects.create') }}" class="btn btn-outline-primary btn-sm">
+            <h3 class="card-title mb-0 font-weight-bold text-dark">Reported Defects</h3>
+            <a href="{{ route('admin.street-defects.create') }}" class="btn btn-outline-primary btn-sm px-3">
                 <i class="fas fa-plus mr-1"></i> Report New Defect
             </a>
         </div>
@@ -56,9 +56,13 @@
                             <td>{{ $defect->location }}</td>
                             <td>
                                 @if ($defect->image)
-                                    <a href="{{ asset('storage/' . $defect->image) }}" target="_blank">View Image</a>
+                                    <a href="{{ asset('storage/' . $defect->image) }}" 
+                                       target="_blank" 
+                                       class="btn btn-sm btn-outline-info">
+                                        <i class="fas fa-image mr-1"></i> View
+                                    </a>
                                 @else
-                                    N/A
+                                    <span class="text-muted">N/A</span>
                                 @endif
                             </td>
                             <td>
@@ -73,24 +77,28 @@
                                 <span class="badge {{ $statusClass }}">{{ $defect->status }}</span>
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('admin.street-defects.show', $defect->id) }}" class="btn btn-outline-info btn-sm mr-1">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="{{ route('admin.street-defects.edit', $defect->id) }}" class="btn btn-outline-warning btn-sm mr-1">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form action="{{ route('admin.street-defects.destroy', $defect->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this defect?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </form>
+                                <div class="btn-group" role="group">
+                                    <a href="{{ route('admin.street-defects.show', $defect->id) }}" class="btn btn-outline-info btn-sm">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{{ route('admin.street-defects.edit', $defect->id) }}" class="btn btn-outline-warning btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ route('admin.street-defects.destroy', $defect->id) }}" 
+                                          method="POST" 
+                                          onsubmit="return confirm('Are you sure you want to delete this defect?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="7" class="text-center text-muted">No defects reported yet.</td>
+                            <td colspan="6" class="text-center text-muted">No defects reported yet.</td>
                         </tr>
                         @endforelse
                     </tbody>

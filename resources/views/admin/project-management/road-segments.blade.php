@@ -29,8 +29,8 @@
 
     <div class="card shadow-sm border-0">
         <div class="card-header bg-white d-flex justify-content-between align-items-center">
-            <h3 class="card-title mb-0">Mapped Road Segments</h3>
-            <a href="{{ route('admin.road-segments.create') }}" class="btn btn-outline-primary btn-sm">
+            <h3 class="card-title mb-0 font-weight-bold text-dark">Mapped Road Segments</h3>
+            <a href="{{ route('admin.road-segments.create') }}" class="btn btn-outline-primary btn-sm px-3">
                 <i class="fas fa-plus mr-1"></i> Add New Segment
             </a>
         </div>
@@ -44,8 +44,6 @@
                             <th>Segment Name</th>
                             <th>Status</th>
                             <th>Line Type</th>
-                            <th>Start Coordinates</th>
-                            <th>End Coordinates</th>
                             <th>Description</th>
                             <th class="text-center">Actions</th>
                         </tr>
@@ -60,35 +58,35 @@
                                     $statusClass = match($segment->status) {
                                         'Completed' => 'badge-success',
                                         'In Progress' => 'badge-primary',
-                                        'Pending' => 'badge-secondary',
-                                        default => 'badge-dark',
+                                        'Pending' => 'badge-warning',
+                                        default => 'badge-secondary',
                                     };
                                 @endphp
                                 <span class="badge {{ $statusClass }}">{{ $segment->status }}</span>
                             </td>
                             <td>{{ $segment->line_type }}</td>
-                            <td>{{ $segment->start_coordinates }}</td>
-                            <td>{{ $segment->end_coordinates }}</td>
                             <td>{{ $segment->description ?? 'N/A' }}</td>
                             <td class="text-center">
-                                <a href="{{ route('admin.road-segments.show', $segment->id) }}" class="btn btn-outline-info btn-sm mr-1">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="{{ route('admin.road-segments.edit', $segment->id) }}" class="btn btn-outline-warning btn-sm mr-1">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form action="{{ route('admin.road-segments.destroy', $segment->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this segment?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </form>
+                                <div class="btn-group" role="group">
+                                    <a href="{{ route('admin.road-segments.show', $segment->id) }}" class="btn btn-outline-info btn-sm">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{{ route('admin.road-segments.edit', $segment->id) }}" class="btn btn-outline-warning btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ route('admin.road-segments.destroy', $segment->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this segment?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="9" class="text-center text-muted">No road segments found.</td>
+                            <td colspan="6" class="text-center text-muted">No road segments found.</td>
                         </tr>
                         @endforelse
                     </tbody>
