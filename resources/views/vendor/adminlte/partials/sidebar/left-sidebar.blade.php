@@ -78,7 +78,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('admin.contact-messages.index') }}" class="nav-link">
+            <a href="{{ route('contact-messages.index') }}" class="nav-link">
               <i class="nav-icon fas fa-fw fa-envelope"></i>
               <p>Contact Messages</p>
             </a>

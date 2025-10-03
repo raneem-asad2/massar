@@ -30,7 +30,7 @@
     <div class="card shadow-sm border-0">
         <div class="card-header bg-white d-flex justify-content-between align-items-center">
             <h3 class="card-title mb-0">Inbox</h3>
-            <a href="{{ route('admin.contact-messages.create') }}" class="btn btn-outline-primary btn-sm">
+            <a href="{{ route('contact-messages.create') }}" class="btn btn-outline-primary btn-sm">
                 <i class="fas fa-plus mr-1"></i> New Message
             </a>
         </div>
@@ -65,13 +65,10 @@
                                     </span>
                                 </td>
                                 <td class="text-center">
-                                    <a href="{{ route('admin.contact-messages.show', $message->id) }}" class="btn btn-outline-info btn-sm mr-1">
+                                    <a href="{{ route('contact-messages.show', $message->id) }}" class="btn btn-outline-info btn-sm mr-1">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="{{ route('admin.contact-messages.edit', $message->id) }}" class="btn btn-outline-warning btn-sm mr-1">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <form action="{{ route('admin.contact-messages.destroy', $message->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this message?');">
+                                    <form action="{{ route('contact-messages.destroy', $message->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this message?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-outline-danger btn-sm">

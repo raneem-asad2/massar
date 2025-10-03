@@ -19,17 +19,21 @@ class ContactMessageController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'message_text' => 'required|string',
-        ]);
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'message' => 'required|string',
+    ]);
 
-        ContactMessage::create($request->all());
+    ContactMessage::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'message_text' => $request->message,
+    ]);
 
-        return redirect()->route('admin.contact-messages.index')->with('success', 'Message created.');
-    }
+    return redirect()->back()->with('success', 'Message sent successfully!');
+}
 
     public function show(ContactMessage $contactMessage)
     {
@@ -38,25 +42,16 @@ class ContactMessageController extends Controller
 
     public function edit(ContactMessage $contactMessage)
     {
-        return view('admin.users.edit-contact-messages', compact('contactMessage'));
     }
 
     public function update(Request $request, ContactMessage $contactMessage)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'message_text' => 'required|string',
-        ]);
-
-        $contactMessage->update($request->all());
-
-        return redirect()->route('admin.contact-messages.index')->with('success', 'Message updated.');
+    
     }
 
     public function destroy(ContactMessage $contactMessage)
     {
         $contactMessage->delete();
-        return redirect()->route('admin.contact-messages.index')->with('success', 'Message deleted.');
+        return redirect()->route('contact-messages.index')->with('success', 'Message deleted.');
     }
 }

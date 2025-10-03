@@ -27,6 +27,8 @@ use App\Http\Controllers\RobotDataController;
 Route::get('/', function () { return view('home'); })->name('home.public');
 Route::get('/about', function () { return view('about'); })->name('about');
 Route::get('/services', function () { return view('services'); })->name('services');
+Route::resource('contact-messages', ContactMessageController::class);
+
 Route::view('/contact', 'contact')->name('contact');
 Auth::routes();
 
@@ -44,8 +46,6 @@ Route::middleware(['auth', 'role:admin,editor'])->prefix('admin')->name('admin.'
     Route::resource('maintenance-records', MaintenanceRecordController::class);
     Route::resource('road-segments', RoadSegmentController::class);
     Route::resource('street-defects', StreetDefectController::class);
-    Route::resource('contact-messages', ContactMessageController::class);
-
 
     // Profile routes
     Route::get('/user-profile', [ProfileController::class, 'show'])->name('profile.show'); // view
