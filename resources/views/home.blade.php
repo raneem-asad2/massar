@@ -190,50 +190,28 @@
             </div>
           </div>
 
-     <div class="col-lg-6">
-
-    {{-- Success message --}}
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="col-lg-6">
+    <form action="{{ route('contact-messages.store') }}" method="POST" data-aos="fade-up" data-aos-delay="500">
+    @csrf
+    <div class="row gy-4">
+        <div class="col-md-6">
+            <input type="text" name="name" class="form-control" placeholder="Your Name"  required>
         </div>
-    @endif
 
-    {{-- Validation errors --}}
-    @if ($errors->any())
-        <div class="alert alert-danger shadow-sm">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+        <div class="col-md-6">
+            <input type="email" name="email" class="form-control" placeholder="Your Email"  required>
         </div>
-    @endif
 
-    <form action="{{ route('contact-messages.store') }}" method="POST" class="php-email-form" data-aos="fade-up" data-aos-delay="500">
-        @csrf
-        <div class="row gy-4">
-            <div class="col-md-6">
-                <input type="text" name="name" class="form-control" placeholder="Your Name" value="{{ old('name') }}" required>
-            </div>
-
-            <div class="col-md-6">
-                <input type="email" name="email" class="form-control" placeholder="Your Email" value="{{ old('email') }}" required>
-            </div>
-
-            <div class="col-md-12">
-                <textarea name="message" class="form-control" rows="4" placeholder="Message" required>{{ old('message') }}</textarea>
-            </div>
-
-            <div class="col-md-12 text-center">
-                <button type="submit" class="btn btn-primary">Send Message</button>
-            </div>
+        <div class="col-md-12">
+            <textarea name="message" class="form-control" rows="4" placeholder="Message" required>{{ old('message') }}</textarea>
         </div>
-    </form>
 
+        <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-outline-warning">Send Message</button>
+        </div>
+    </div>
+</form>
 </div>
-
         </div>
       </div>
     </section>

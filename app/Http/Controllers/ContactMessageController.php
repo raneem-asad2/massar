@@ -15,7 +15,7 @@ class ContactMessageController extends Controller
 
     public function create()
     {
-        return view('admin.users.create-contact-messages');
+
     }
 
     public function store(Request $request)
