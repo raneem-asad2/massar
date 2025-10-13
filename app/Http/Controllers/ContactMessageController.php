@@ -15,25 +15,28 @@ class ContactMessageController extends Controller
 
     public function create()
     {
-
+        // No implementation needed here for your current contact form
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|max:255',
-        'message' => 'required|string',
-    ]);
+    {
+        // This is the updated part
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message_text' => 'required|string', // Changed from 'message' to 'message_text'
+        ]);
 
-    ContactMessage::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'message_text' => $request->message,
-    ]);
+        // ContactMessage::create($validatedData) will now correctly use the 'message_text' key
+        ContactMessage::create($validatedData);
 
-    return redirect()->back()->with('success', 'Message sent successfully!');
-}
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Your message has been sent successfully!'], 200);
+        }
+
+        // Fallback for non-AJAX requests
+        return redirect()->back()->with('success', 'Your message has been sent successfully!');
+    }
 
     public function show(ContactMessage $contactMessage)
     {
@@ -42,11 +45,12 @@ class ContactMessageController extends Controller
 
     public function edit(ContactMessage $contactMessage)
     {
+        // No implementation needed here for your current contact form
     }
 
     public function update(Request $request, ContactMessage $contactMessage)
     {
-    
+        // No implementation needed here for your current contact form
     }
 
     public function destroy(ContactMessage $contactMessage)

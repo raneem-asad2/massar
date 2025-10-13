@@ -42,35 +42,49 @@ public function edit(Project $project)
     return view('admin.project-management.edit-project', compact('project'));
 }
 
-public function systemAlerts()
+// public function systemAlerts()
+// {
+//     $projects = Project::with('robot')->get();
+
+//     $systemAlerts = [];
+
+//     foreach ($projects as $project) {
+//         if (!$project->robot) {
+//             continue; 
+//         }
+
+//         $level = 'medium';
+//         if ($project->robot->charge_level < 20) {
+//             $level = 'critical';
+//         } elseif ($project->robot->paint_level < 20) {
+//             $level = 'high';
+//         } elseif ($project->status === 'delayed') {
+//             $level = 'high';
+//         }
+
+//         $systemAlerts[] = [
+//             'robot_id' => $project->robot->robot_name,
+//             'title' => $project->project_name,
+//             'details' => "Charge: {$project->robot->charge_level}%, Paint: {$project->robot->paint_level}%, Status: {$project->robot->robot_status}",
+//             'level' => $level,
+//             'icon' => 'bi bi-exclamation-triangle-fill', 
+//         ];
+//     }
+
+//     return view('dashboard', compact('systemAlerts'));
+// }
+
+public function destroy(Project $project)
 {
-    $projects = Project::with('robot')->get();
-
-    $systemAlerts = [];
-
-    foreach ($projects as $project) {
-        if (!$project->robot) {
-            continue; 
-        }
-
-        $level = 'medium';
-        if ($project->robot->charge_level < 20) {
-            $level = 'critical';
-        } elseif ($project->robot->paint_level < 20) {
-            $level = 'high';
-        } elseif ($project->status === 'delayed') {
-            $level = 'high';
-        }
-
-        $systemAlerts[] = [
-            'robot_id' => $project->robot->robot_name,
-            'title' => $project->project_name,
-            'details' => "Charge: {$project->robot->charge_level}%, Paint: {$project->robot->paint_level}%, Status: {$project->robot->robot_status}",
-            'level' => $level,
-            'icon' => 'bi bi-exclamation-triangle-fill', 
-        ];
+    try {
+        $project->delete();
+        return redirect()
+            ->route('admin.projects.index')
+            ->with('success', 'Project deleted successfully.');
+    } catch (\Exception $e) {
+        return redirect()
+            ->route('admin.projects.index')
+            ->with('error', 'Failed to delete the project. Please try again.');
     }
-
-    return view('dashboard', compact('systemAlerts'));
 }
 }

@@ -173,46 +173,152 @@
   </div>
 </section>
 
-    <section id="contact" class="contact section">
-
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Contact</h2>
+<section id="contact" class="contact section">
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Contact Us</h2>
         <p>Get In Touch</p>
-      </div>
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="row gy-4">
-          <div class="col-lg-6">
-            <div class="row gy-4">
-              <div class="col-lg-12"><div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="200"><i class="bi bi-geo-alt"></i><h3>Address</h3><p>Amman Jordan</p></div></div>
-              <div class="col-md-6"><div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="300"><i class="bi bi-telephone"></i><h3>Call Us</h3><p>+962 795190420</p></div></div>
-              <div class="col-md-6"><div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="400"><i class="bi bi-envelope"></i><h3>Email Us</h3><p>Massar.line.proj@gmail.com</p></div></div>
+    </div>
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row gy-4 justify-content-center">
+            {{-- Contact Information Block --}}
+            <div class="col-lg-6">
+                <div class="row gy-4">
+                    {{-- Location Item --}}
+                    <div class="col-lg-12 mb-3"> {{-- Added mb-3 for spacing on small screens --}}
+                        <div class="info-item d-flex flex-column justify-content-center align-items-center text-center p-3 shadow-sm rounded-3 h-100" data-aos="fade-up" data-aos-delay="200">
+                            <i class="bi bi-geo-alt display-6 text-primary mb-2"></i> {{-- Larger icon, primary color --}}
+                            <h3 class="h5 fw-bold">Our Location</h3>
+                            <p class="mb-0">Amman, Jordan</p>
+                        </div>
+                    </div>
+                    {{-- Call Us Item --}}
+                    <div class="col-md-6 mb-3"> {{-- Added mb-3 for spacing on small screens --}}
+                        <div class="info-item d-flex flex-column justify-content-center align-items-center text-center p-3 shadow-sm rounded-3 h-100" data-aos="fade-up" data-aos-delay="300">
+                            <i class="bi bi-telephone display-6 text-success mb-2"></i> {{-- Larger icon, success color --}}
+                            <h3 class="h5 fw-bold">Call Us</h3>
+                            <p class="mb-0"><a href="tel:+962795190420" class="text-decoration-none">+962 795190420</a></p> {{-- Styled link --}}
+                        </div>
+                    </div>
+                    {{-- Email Us Item --}}
+                    <div class="col-md-6 mb-3"> {{-- Added mb-3 for spacing on small screens --}}
+                        <div class="info-item d-flex flex-column justify-content-center align-items-center text-center p-3 shadow-sm rounded-3 h-100" data-aos="fade-up" data-aos-delay="400">
+                            <i class="bi bi-envelope display-6 text-danger mb-2"></i> {{-- Larger icon, danger color --}}
+                            <h3 class="h5 fw-bold">Email Us</h3>
+                            <p class="mb-0"><a href="mailto:Massar.line.proj@gmail.com" class="text-decoration-none">Massar.line.proj@gmail.com</a></p> {{-- Styled link --}}
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
 
-<div class="col-lg-6">
-    <form action="{{ route('contact-messages.store') }}" method="POST" data-aos="fade-up" data-aos-delay="500">
-    @csrf
-    <div class="row gy-4">
-        <div class="col-md-6">
-            <input type="text" name="name" class="form-control" placeholder="Your Name"  required>
-        </div>
+            {{-- Contact Form Block --}}
+            <div class="col-lg-6">
+                <form id="contactForm" action="{{ route('contact-messages.store') }}" method="POST" class="php-email-form bg-white p-4 shadow-sm rounded-3" data-aos="fade-up" data-aos-delay="500">
+                    @csrf
+                    <div class="row gy-3"> {{-- Changed to gy-3 for slightly less vertical spacing --}}
+                        <div class="col-md-6">
+                            <label for="nameInput" class="form-label visually-hidden">Your Name</label> {{-- Added accessible label --}}
+                            <input type="text" name="name" id="nameInput" class="form-control" placeholder="Your Name" value="{{ old('name') }}" required aria-label="Your Name">
+                            @error('name')<div class="text-danger mt-1">{{ $message }}</div>@enderror
+                        </div>
 
-        <div class="col-md-6">
-            <input type="email" name="email" class="form-control" placeholder="Your Email"  required>
-        </div>
+                        <div class="col-md-6">
+                            <label for="emailInput" class="form-label visually-hidden">Your Email</label> {{-- Added accessible label --}}
+                            <input type="email" name="email" id="emailInput" class="form-control" placeholder="Your Email" value="{{ old('email') }}" required aria-label="Your Email">
+                            @error('email')<div class="text-danger mt-1">{{ $message }}</div>@enderror
+                        </div>
 
-        <div class="col-md-12">
-            <textarea name="message" class="form-control" rows="4" placeholder="Message" required>{{ old('message') }}</textarea>
-        </div>
+                        <div class="col-md-12">
+                            <label for="messageTextInput" class="form-label visually-hidden">Your Message</label> {{-- Added accessible label --}}
+                            <textarea name="message_text" id="messageTextInput" class="form-control" rows="6" placeholder="Your Message" required aria-label="Your Message">{{ old('message_text') }}</textarea>
+                            @error('message_text')<div class="text-danger mt-1">{{ $message }}</div>@enderror
+                        </div>
 
-        <div class="col-md-12 text-center">
-            <button type="submit" class="btn btn-outline-warning">Send Message</button>
+                        <div class="col-md-12 text-center mt-4"> {{-- Increased top margin for button --}}
+                            {{-- Messages and Button --}}
+                            <div class="loading text-info mb-2 d-none">Sending Message...</div>
+                            <div class="error-message alert alert-danger mb-2 d-none" role="alert"></div>
+                            <div class="sent-message alert alert-success mb-2 d-none" role="alert"></div>
+                            <button type="submit" class="btn btn-warning w-100 fw-bold">Send Message</button> {{-- Full width button on all screens --}}
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</form>
-</div>
-        </div>
-      </div>
-    </section>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contactForm');
+    const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
+    const csrfToken = csrfTokenMeta ? csrfTokenMeta.getAttribute('content') : '';
+
+    if (contactForm) {
+        const loadingDiv = contactForm.querySelector('.loading');
+        const errorMessageDiv = contactForm.querySelector('.error-message');
+        const sentMessageDiv = contactForm.querySelector('.sent-message');
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            errorMessageDiv.classList.add('d-none');
+            sentMessageDiv.classList.add('d-none');
+            errorMessageDiv.innerHTML = '';
+            sentMessageDiv.innerHTML = '';
+
+            loadingDiv.classList.remove('d-none');
+            submitButton.disabled = true; // Disable button during submission
+
+            const formData = new FormData(this); // Get form data
+
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': csrfToken // Use the retrieved token
+                }
+            })
+            .then(response => {
+                loadingDiv.classList.add('d-none'); // Hide loading spinner
+
+                if (!response.ok) {
+                    return response.json().then(errorData => {
+                        throw errorData;
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                sentMessageDiv.innerHTML = data.message || 'Your message has been sent. Thank you!';
+                sentMessageDiv.classList.remove('d-none'); // Show success message
+                contactForm.reset(); // Clear the form fields
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                let message = 'There was an error sending your message. Please try again.';
+
+                if (error.errors) {
+                    message = '<ul>';
+                    for (let key in error.errors) {
+                        message += `<li>${error.errors[key][0]}</li>`;
+                    }
+                    message += '</ul>';
+                } else if (error.message) {
+                    message = error.message;
+                }
+
+                errorMessageDiv.innerHTML = message;
+                errorMessageDiv.classList.remove('d-none'); 
+            })
+            .finally(() => {
+                submitButton.disabled = false; 
+            });
+        });
+    }
+});
+</script>
+
 @endsection

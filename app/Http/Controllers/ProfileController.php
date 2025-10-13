@@ -9,7 +9,6 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    // View profile
     public function show(Request $request): View
     {
         return view('admin.users.profile', [
@@ -17,7 +16,6 @@ class ProfileController extends Controller
         ]);
     }
 
-    // Edit profile
     public function edit(Request $request): View
     {
         return view('admin.users.edit-profile', [
@@ -25,7 +23,6 @@ class ProfileController extends Controller
         ]);
     }
 
-    // Update profile
     public function update(ProfileUpdateRequest $request)
     {
         $user = $request->user();
@@ -49,7 +46,6 @@ class ProfileController extends Controller
         return Redirect::route('admin.profile.edit')->with('status', 'Profile updated successfully');
     }
 
-    // Delete account
     public function destroy(Request $request)
     {
         $request->validateWithBag('userDeletion', [

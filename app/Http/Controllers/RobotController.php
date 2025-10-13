@@ -17,17 +17,13 @@ class RobotController extends Controller
         return view('admin.project-management.robots', compact('robots'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+   
     public function create()
     {
         return view('admin.project-management.create-robot');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+   
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -45,27 +41,21 @@ class RobotController extends Controller
         return redirect()->route('admin.robots.index')->with('success', 'Robot created successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
+  
     public function show(string $id)
     {
         $robot = Robot::with('projects.roadSegments')->findOrFail($id);
         return view('admin.project-management.show-robot', compact('robot'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+ 
     public function edit(string $id)
     {
         $robot = Robot::findOrFail($id);
         return view('admin.project-management.edit-robot', compact('robot'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    
     public function update(Request $request, string $id)
     {
         $robot = Robot::findOrFail($id);
@@ -87,9 +77,13 @@ class RobotController extends Controller
     }
 
     public function destroy(Robot $robot)
-    {
+{
+    try {
         $robot->delete();
         return redirect()->route('admin.robots.index')->with('success', 'Robot deleted successfully!');
+    } catch (QueryException $e) {
+        return redirect()->route('admin.robots.index')->with('error', 'Cannot delete robot because it is linked to one or more projects.');
     }
+}
 
 }
