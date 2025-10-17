@@ -32,13 +32,13 @@
                 <input type="checkbox" name="remember" class="form-check-input" id="remember">
                 <label class="form-check-label" for="remember">Remember me</label>
             </div>
-
+{{-- 
             <div class="text-center">
                 <a href="{{ route('google.login')}}" class="btn w-100 py-2 mb-3 d-flex align-items-center justify-content-center"
                 style="background-color: #353535; color: #fff; border-radius: 8px;">
                     <i class="bi bi-google me-2"></i> Continue with Google
                 </a>
-            </div>
+            </div> --}}
 
             <button type="submit" class="services-btn w-100 py-2 mb-3">Log in</button>
         </form>

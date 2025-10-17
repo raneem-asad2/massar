@@ -5,12 +5,12 @@
 @section('content')
     <section id="hero" class="hero section dark-background">
       <img src="{{ asset('assets/img/bg(1).jpg') }}" alt="" data-aos="fade-in">
-      <div class="container d-flex flex-column align-items-center">
-        <h2 data-aos="fade-up" data-aos-delay="100">every Line a Step Toward The Future.</h2>
+      <div class="container d-flex flex-column align-items-center text-center"> {{-- Added text-center here --}}
+        <h2 data-aos="fade-up" data-aos-delay="100">Every Line a Step Toward The Future.</h2>
         <p data-aos="fade-up" data-aos-delay="200">Paving the Future, One Line at a Time</p>
-        <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
-          <a href="#about" class="btn-get-started">Get Started</a>
-          <a href="" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+        <div class="d-flex flex-column flex-sm-row justify-content-center mt-4" data-aos="fade-up" data-aos-delay="300"> {{-- Added flex-column, flex-sm-row, justify-content-center --}}
+          <a href="#about" class="btn-get-started mb-3 mb-sm-0 me-sm-3">Get Started</a> {{-- Added spacing classes --}}
+          <a href="" class="glightbox btn-watch-video d-flex align-items-center justify-content-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a> {{-- Added justify-content-center --}}
         </div>
       </div>
     </section>
@@ -21,7 +21,10 @@
     <div class="row gy-4">
       <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
         <h3>Autonomous Precision for Modern Infrastructure</h3>
-        <img src="{{ asset('assets/img/robot-sketch1.jpg') }}" class="img-fluid rounded-4 mb-4" alt="Massar Robotics">
+        {{-- Image 1: Constrain to 75% of its parent width, center it --}}
+        <div class="text-center mb-4">
+          <img src="{{ asset('assets/img/robot-sketch1.jpg') }}" class="img-fluid rounded-4 w-75 mx-auto d-block" alt="Massar Robotics">
+        </div>
         <p>Massar is a Jordan-based robotics company specializing in autonomous road-painting technology.</p>
         <p>Our self-driving robot operates at night to avoid traffic, using GPS, cameras, and gyroscopes to deliver highly accurate lane markings. It works from a designated charging station, covering specific areas efficiently. Citizens receive mobile alerts during operation, and a live dashboard provides real-time updates on paint levels, battery status, work progress, and estimated completion time. Massar brings intelligent automation to road infrastructure—enhancing precision, efficiency, and transparency.</p>
       </div>
@@ -38,8 +41,9 @@
           <p>
             With Massar, road maintenance is no longer a disruptive, labor-intensive process. We deliver a forward-thinking solution that minimizes public inconvenience while maximizing quality and accountability, setting a new standard for smart city infrastructure.
           </p>
-          <div class="position-relative mt-4">
-            <img src="{{ asset('assets/img/robot-sketch3.jpg') }}" class="img-fluid rounded-4" alt="Street Lining Robot in Action">
+          <div class="position-relative mt-4 text-center"> {{-- Added text-center here too --}}
+            {{-- Image 2: Constrain to 75% of its parent width, center it --}}
+            <img src="{{ asset('assets/img/robot-sketch3.jpg') }}" class="img-fluid rounded-4 w-75 mx-auto d-block" alt="Street Lining Robot in Action">
             <a href="https://youtu.be/AGjUv1U9COM?si=EQvyGrWykhf-o67w" class="glightbox pulsating-play-btn"></a>
           </div>
         </div>
@@ -47,7 +51,6 @@
     </div>
   </div>
 </section><!-- /About Section -->
-
     <!-- Stats Section -->
      <section id="stats" class="stats section light-background">
       <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -62,53 +65,96 @@
 
     <!-- Services Section -->
    <section id="services" class="services section">
-      <div class="container section-title" data-aos="fade-up"><h2>Our Solution</h2><p>Core Features & Services</p></div>
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="row gy-5">
-          <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="200"><div class="service-item"><div class="img"><img src="{{ asset('assets/img/robot-sketch1.jpg') }}" class="img-fluid" alt=""></div><div class="details position-relative"><div class="icon"><i class="bi bi-rulers"></i></div><a href="#" class="stretched-link"><h3>High-Precision Line Marking</h3></a><p>Utilizing RTK-GPS and sensor fusion, our robot achieves sub-centimeter accuracy for perfectly straight and curved lines, compliant with all traffic regulations.</p></div></div></div>
-          <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="300"><div class="service-item"><div class="img"><img src="{{ asset('assets/img/robot-sketch2.jpg') }}" class="img-fluid" alt=""></div><div class="details position-relative"><div class="icon"><i class="bi bi-bar-chart-line"></i></div><a href="#" class="stretched-link"><h3>Live Monitoring Dashboard</h3></a><p>Gain real-time access to operational data, including paint levels, battery status, work progress, and projected completion times for full transparency.</p></div></div></div>
-          <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="400"><div class="service-item"><div class="img"><img src="{{ asset('assets/img/robot-sketch3.jpg') }}" class="img-fluid" alt=""></div><div class="details position-relative"><div class="icon"><i class="bi bi-moon-stars"></i></div><a href="#" class="stretched-link"><h3>Safe Night-Time Operation</h3></a><p>Our autonomous system works during off-peak hours, eliminating risks to human workers and minimizing traffic disruption for citizens.</p></div></div></div>
-        </div>
-      </div>
-    </section><!--/ Services Section -->
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Our Solution</h2>
+        <p>Core Features & Services</p>
+    </div>
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row gy-5 justify-content-center"> {{-- Added justify-content-center here --}}
 
-    <section id="technology" class="features section light-background">
-        <div class="container section-title" data-aos="fade-up">
-            <h2>Technology</h2>
-            <p>The Brains Behind the Operation</p>
-        </div>
-        <div class="container">
-            <div class="row gy-4">
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="feature-item d-flex">
-                        <i class="bi bi-broadcast-pin color-blue flex-shrink-0"></i>
-                        <div>
-                            <h4>High-Accuracy GPS</h4>
-                            <p>Real-Time Kinematic (RTK) positioning provides pinpoint location data for flawless execution of digital road plans.</p>
-                        </div>
+            <div class="col-xl-4 col-md-6 d-flex" data-aos="zoom-in" data-aos-delay="200"> {{-- Added d-flex --}}
+                <div class="service-item w-100"> {{-- Added w-100 --}}
+                    <div class="img text-center"> {{-- Added text-center --}}
+                        <img src="{{ asset('assets/img/robot-sketch1.jpg') }}" class="img-fluid rounded-4 mb-3 w-75 mx-auto d-block" alt="High-Precision Line Marking"> {{-- Added mb-3, w-75, mx-auto, d-block --}}
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="feature-item d-flex">
-                        <i class="bi bi-camera-video color-orange flex-shrink-0"></i>
-                        <div>
-                            <h4>Computer Vision</h4>
-                            <p>Onboard cameras detect existing lines, obstacles, and road conditions, ensuring safe and adaptive operation.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="feature-item d-flex">
-                        <i class="bi bi-robot color-green flex-shrink-0"></i>
-                        <div>
-                            <h4>Sensor Fusion</h4>
-                            <p>Data from gyroscopes, and wheel encoders are combined to maintain perfect orientation and speed control.</p>
-                        </div>
+                    <div class="details position-relative text-center"> {{-- Added text-center --}}
+                        <div class="icon mx-auto"><i class="bi bi-rulers"></i></div> {{-- Added mx-auto --}}
+                        <a href="#" class="stretched-link"><h3>High-Precision Line Marking</h3></a>
+                        <p>Utilizing RTK-GPS and sensor fusion, our robot achieves sub-centimeter accuracy for perfectly straight and curved lines, compliant with all traffic regulations.</p>
                     </div>
                 </div>
             </div>
+
+            <div class="col-xl-4 col-md-6 d-flex" data-aos="zoom-in" data-aos-delay="300"> {{-- Added d-flex --}}
+                <div class="service-item w-100"> {{-- Added w-100 --}}
+                    <div class="img text-center"> {{-- Added text-center --}}
+                        <img src="{{ asset('assets/img/robot-sketch2.jpg') }}" class="img-fluid rounded-4 mb-3 w-75 mx-auto d-block" alt="Live Monitoring Dashboard"> {{-- Added mb-3, w-75, mx-auto, d-block --}}
+                    </div>
+                    <div class="details position-relative text-center"> {{-- Added text-center --}}
+                        <div class="icon mx-auto"><i class="bi bi-bar-chart-line"></i></div> {{-- Added mx-auto --}}
+                        <a href="#" class="stretched-link"><h3>Live Monitoring Dashboard</h3></a>
+                        <p>Gain real-time access to operational data, including paint levels, battery status, work progress, and projected completion times for full transparency.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-md-6 d-flex" data-aos="zoom-in" data-aos-delay="400"> {{-- Added d-flex --}}
+                <div class="service-item w-100"> {{-- Added w-100 --}}
+                    <div class="img text-center"> {{-- Added text-center --}}
+                        <img src="{{ asset('assets/img/robot-sketch3.jpg') }}" class="img-fluid rounded-4 mb-3 w-75 mx-auto d-block" alt="Safe Night-Time Operation"> {{-- Added mb-3, w-75, mx-auto, d-block --}}
+                    </div>
+                    <div class="details position-relative text-center"> {{-- Added text-center --}}
+                        <div class="icon mx-auto"><i class="bi bi-moon-stars"></i></div> {{-- Added mx-auto --}}
+                        <a href="#" class="stretched-link"><h3>Safe Night-Time Operation</h3></a>
+                        <p>Our autonomous system works during off-peak hours, eliminating risks to human workers and minimizing traffic disruption for citizens.</p></div>
+                </div>
+            </div>
+
         </div>
-    </section>
+    </div>
+</section><!--/ Services Section -->
+
+<section id="technology" class="features section light-background">
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Our Core Technology</h2> {{-- More descriptive title --}}
+        <p>The Brains Behind Massar's Autonomous Operations</p> {{-- More engaging tagline --}}
+    </div>
+    <div class="container">
+        <div class="row gy-4 justify-content-center"> {{-- Added justify-content-center --}}
+
+            <div class="col-lg-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100"> {{-- Added d-flex --}}
+                <div class="feature-item w-100 p-4 rounded-3 shadow-sm d-flex flex-column align-items-center text-center"> {{-- Enhanced styling and centering --}}
+                    <i class="bi bi-broadcast-pin color-blue fs-1 mb-3"></i> {{-- Larger icon, margin-bottom --}}
+                    <div>
+                        <h4 class="fw-bold">High-Accuracy GPS</h4> {{-- Bolder title --}}
+                        <p class="text-muted">Real-Time Kinematic (RTK) positioning provides pinpoint location data for flawless execution of digital road plans.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200"> {{-- Added d-flex --}}
+                <div class="feature-item w-100 p-4 rounded-3 shadow-sm d-flex flex-column align-items-center text-center"> {{-- Enhanced styling and centering --}}
+                    <i class="bi bi-camera-video color-orange fs-1 mb-3"></i> {{-- Larger icon, margin-bottom --}}
+                    <div>
+                        <h4 class="fw-bold">Computer Vision</h4>
+                        <p class="text-muted">Onboard cameras detect existing lines, obstacles, and road conditions, ensuring safe and adaptive operation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300"> {{-- Added d-flex --}}
+                <div class="feature-item w-100 p-4 rounded-3 shadow-sm d-flex flex-column align-items-center text-center"> {{-- Enhanced styling and centering --}}
+                    <i class="bi bi-robot color-green fs-1 mb-3"></i> {{-- Larger icon, margin-bottom --}}
+                    <div>
+                        <h4 class="fw-bold">Sensor Fusion</h4>
+                        <p class="text-muted">Data from gyroscopes, and wheel encoders are combined to maintain perfect orientation and speed control.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
 
 <!-- Team Section -->
 <section id="team" class="team section light-background">

@@ -46,9 +46,9 @@
             <hr class="my-4">
 
             {{-- Google registration/login --}}
-            <a href="{{ route('google.login') }}" class="btn w-100 mb-3" style="background-color: #353535; color: #fff; border-radius: 8px;">
+            {{-- <a href="{{ route('google.login') }}" class="btn w-100 mb-3" style="background-color: #353535; color: #fff; border-radius: 8px;">
                 <i class="bi bi-google me-2"></i> Register with Google
-            </a>
+            </a> --}}
 
             <p class="text-center">Already have an account? 
                 <a href="{{ route('login') }}" class="text-decoration-none fw-bold">Login</a>

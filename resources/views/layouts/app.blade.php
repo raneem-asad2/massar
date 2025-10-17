@@ -26,14 +26,44 @@
 
 <body>
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+<header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-        <a href="{{ url('/') }}" class="logo d-flex align-items-center me-auto">
+        {{-- Logo - Always first on small screens, first on large screens --}}
+        <a href="{{ url('/') }}" class="logo d-flex align-items-center order-1 order-lg-1 me-auto me-lg-0">
             <h1 class="sitename">Massar</h1>
         </a>
 
-        <nav id="navmenu" class="navmenu">
+        {{-- Auth Buttons - Second on small screens, last on large screens --}}
+        <div class="auth-buttons order-2 order-lg-3 d-flex align-items-center ms-auto ms-lg-0">
+            @guest
+                <a class="btn-getstarted btn-sm d-none d-sm-inline-block ms-4" href="{{ route('login') }}">Login</a>
+                <a class="btn-getstarted btn-sm  d-none d-sm-inline-block ms-4 " href="{{ route('register') }}">Register</a>
+                {{-- Visible only on extra small devices --}}
+                <a class="btn-getstarted btn-sm d-sm-none" href="{{ route('login') }}" title="Login">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                </a>
+                <a class="btn-getstarted btn-sm ms-2 d-sm-none" href="{{ route('register') }}" title="Register">
+                    <i class="bi bi-person-plus"></i>
+                </a>
+            @else
+                <a class="btn-getstarted btn-sm d-none d-sm-inline-block" href="{{ route('logout') }}"
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    Logout
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                {{-- Visible only on extra small devices --}}
+                <a class="btn-getstarted btn-sm d-sm-none" href="{{ route('logout') }}" title="Logout"
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="bi bi-box-arrow-right"></i>
+                </a>
+            @endguest
+        </div>
+
+        {{-- Navigation Menu - Third on small screens (behind toggle), second on large screens --}}
+        <nav id="navmenu" class="navmenu order-3 order-lg-2 ms-4">
             <ul>
                 <li><a href="{{ url('/') }}#hero" class="active">Home</a></li>
                 <li><a href="{{ url('/') }}#about">About</a></li>
@@ -45,28 +75,9 @@
         <li><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
     @endif
 @endauth
-
-
-
-
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
-
-        <div class="auth-buttons ms-lg-3">
-            @guest
-                <a class="cta-btn" href="{{ route('login') }}">Login</a>
-                <a class="cta-btn" href="{{ route('register') }}" style="margin-left: 10px;">Register</a>
-            @else
-                <a class="cta-btn" href="{{ route('logout') }}"
-                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Logout
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-            @endguest
-        </div>
 
     </div>
   </header>
@@ -80,13 +91,13 @@
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
           <a href="{{ url('/') }}" class="logo d-flex align-items-center">
-            <span class="sitename">Massar</span>
+            <span class="sitename" style="color: #d2cd28">Massar</span>
           </a>
           <div class="footer-contact pt-3">
-            <p>A108 Adam Street</p>
-            <p>New York, NY 535022</p>
-            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-            <p><strong>Email:</strong> <span>info@example.com</span></p>
+            <p>Amman </p>
+            <p>Jordan</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+962 ---------</span></p>
+            <p><strong>Email:</strong> <span></span></p>
           </div>
           <div class="social-links d-flex mt-4">
             <a href="#"><i class="bi bi-twitter-x"></i></a>
