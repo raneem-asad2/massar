@@ -5,12 +5,7 @@ use App\Http\Controllers\RobotDataController;
 
 
 
-Route::get('/robot-data/{filename}', [RobotDataController::class, 'importFromS3']);
+Route::get('/robots', [RobotDataController::class, 'index']);
+Route::get('/robots/{id}', [RobotDataController::class, 'show']);
 
-Route::get('/import-local-json', [RobotDataController::class, 'importLocalJson']);
-
-Route::post('/import-robots', [RobotDataController::class, 'importFromApi']);
-
-
-
-
+Route::post('/robots', [RobotDataController::class, 'store']);//for testing

@@ -6,269 +6,55 @@ use App\Models\Robot;
 use App\Models\Project;
 use App\Models\RoadSegment;
 use App\Models\StreetDefect;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 class RobotDataController extends Controller
 {
-public function importFromS3($filename)
-{
-    // Build the correct path
-    $path = "robot-data/" . $filename;
-
-    // Check if file exists
-    if (!Storage::disk('s3')->exists($path)) {
-        return response()->json(['message' => "File not found on S3: $path"], 404);
-    }
-
-    // Read file
-    $jsonString = Storage::disk('s3')->get($path);
-    $data = json_decode($jsonString, true);
-
-    if (!isset($data['robot'])) {
-        return response()->json(['message' => 'Invalid JSON structure'], 400);
-    }
-
-    $robotData = $data['robot'];
-
-    // Save Robot
-    $robot = Robot::updateOrCreate(
-        ['serial_number' => $robotData['serial_number']],
-        [
-            'robot_name' => $robotData['robot_name'],
-            'charge_level' => $robotData['charge_level'],
-            'paint_level' => $robotData['paint_level'],
-            'robot_status' => $robotData['robot_status'],
-            'current_location' => $robotData['current_location'],
-            'last_maintenance_date' => $robotData['last_maintenance_date'],
-        ]
-    );
-
-    // Save Projects, Road Segments, Street Defects
-    if (isset($robotData['projects'])) {
-        foreach ($robotData['projects'] as $projData) {
-            $project = Project::updateOrCreate(
-                ['project_name' => $projData['project_name'], 'robot_id' => $robot->id],
-                [
-                    'status' => $projData['status'],
-                    'assignment_date' => $projData['assignment_date'],
-                    'completion_date' => $projData['completion_date'] ?? null,
-                    'staff_id' => null,
-                ]
-            );
-
-            if (isset($projData['road_segments'])) {
-                foreach ($projData['road_segments'] as $segData) {
-                    $segment = RoadSegment::updateOrCreate(
-                        ['segment_name' => $segData['segment_name'], 'project_id' => $project->id],
-                        [
-                            'status' => $segData['status'],
-                            'line_type' => $segData['line_type'],
-                            'start_coordinates' => $segData['start_coordinates'],
-                            'end_coordinates' => $segData['end_coordinates'],
-                            'description' => $segData['description'],
-                        ]
-                    );
-
-                    if (isset($segData['street_defects'])) {
-                        foreach ($segData['street_defects'] as $defectData) {
-                            StreetDefect::updateOrCreate(
-                                ['location' => $defectData['location'], 'segment_id' => $segment->id],
-                                [
-                                    'defect_type' => $defectData['defect_type'],
-                                    'status' => $defectData['status'],
-                                    'image' => $defectData['image'] ?? null,
-                                ]
-                            );
-                        }
-                    }
-                }
-            }
-        }
-    }
+public function index(){
+    $robots=Robot::with([
+        'Projects.RoadSegment.StreetDefect'
+    ])->get();
 
     return response()->json([
-        'message' => 'Data imported successfully from S3',
-        'robot'   => $robot,
+        'message'=>'Robot sata fetched successfully from RDS',
+        'robots'=>$robots,
     ]);
 }
 
+public function show($id){
+    $robot=Robot::with([
+        'Projects.RoadSegment.StreetDefect'
+    ])->find($id);
 
-
-
-
-public function importLocalJson()
-{
-    $path = storage_path('app/test-json/robot_sample.json');
-
-    if (!file_exists($path)) {
-        return response()->json(['message' => 'File not found'], 404);
+    if(!$robot){
+        return response()->json([
+            'message'=>'Robot Not Found'],404);
     }
-
-    $jsonString = file_get_contents($path);
-    $data = json_decode($jsonString, true);
-
-    // Expect "robots" as an array for multiple robot data
-    if (!isset($data['robots']) || !is_array($data['robots'])) {
-        return response()->json(['message' => 'Invalid JSON structure'], 400);
-    }
-
-    $imported = [];
-
-    foreach ($data['robots'] as $robotData) {
-        // Save Robot
-        $robot = Robot::updateOrCreate(
-            ['serial_number' => $robotData['serial_number']],
-            [
-                'robot_name' => $robotData['robot_name'],
-                'charge_level' => $robotData['charge_level'],
-                'paint_level' => $robotData['paint_level'],
-                'robot_status' => $robotData['robot_status'],
-                'current_location' => $robotData['current_location'],
-                'last_maintenance_date' => $robotData['last_maintenance_date'],
-            ]
-        );
-
-        // Save Projects, Road Segments, and Street Defects
-        if (isset($robotData['projects'])) {
-            foreach ($robotData['projects'] as $projData) {
-                $project = Project::updateOrCreate(
-                    ['project_name' => $projData['project_name'], 'robot_id' => $robot->id],
-                    [
-                        'status' => $projData['status'],
-                        'assignment_date' => $projData['assignment_date'],
-                        'completion_date' => $projData['completion_date'],
-                        'staff_id' => null,
-                    ]
-                );
-
-                if (isset($projData['road_segments'])) {
-                    foreach ($projData['road_segments'] as $segData) {
-                        $segment = RoadSegment::updateOrCreate(
-                            ['segment_name' => $segData['segment_name'], 'project_id' => $project->id],
-                            [
-                                'status' => $segData['status'],
-                                'line_type' => $segData['line_type'],
-                                'start_coordinates' => $segData['start_coordinates'],
-                                'end_coordinates' => $segData['end_coordinates'],
-                                'description' => $segData['description'],
-                            ]
-                        );
-
-                        if (isset($segData['street_defects'])) {
-                            foreach ($segData['street_defects'] as $defectData) {
-                                StreetDefect::updateOrCreate(
-                                    [
-                                        'location' => $defectData['location'],
-                                        'segment_id' => $segment->id,
-                                    ],
-                                    [
-                                        'defect_type' => $defectData['defect_type'],
-                                        'status' => $defectData['status'],
-                                        'image' => $defectData['image'] ?? null,
-                                    ]
-                                );
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        $imported[] = $robot;
-    }
-
     return response()->json([
-        'message' => 'Data imported successfully',
-        'robots' => $imported
-    ]);
+            'message' => 'Robot data fetched successfully',
+            'robot' => $robot,
+        ]);
 }
 
-public function importFromApi(Request $request)
+public function store(Request $request)
 {
-    // Validate the structure
-    $data = $request->validate([
-        'robots' => 'required|array',
-        'robots.*.serial_number' => 'required|string',
-        'robots.*.robot_name' => 'required|string',
-        'robots.*.charge_level' => 'required|numeric',
-        'robots.*.paint_level' => 'required|numeric',
-        'robots.*.robot_status' => 'required|string',
-        'robots.*.current_location' => 'required|string',
-        'robots.*.last_maintenance_date' => 'nullable|date',
-        'robots.*.projects' => 'array',
+    $validated = $request->validate([
+        'serial_number' => 'required|unique:robots',
+        'robot_name' => 'required|string',
+        'charge_level' => 'required|numeric',
+        'paint_level' => 'required|numeric',
+        'robot_status' => 'required|string',
+        'current_location' => 'nullable|string',
+        'last_maintenance_date' => 'nullable|date',
     ]);
 
-    $imported = [];
-
-    foreach ($data['robots'] as $robotData) {
-        // Save Robot
-        $robot = Robot::updateOrCreate(
-            ['serial_number' => $robotData['serial_number']],
-            [
-                'robot_name' => $robotData['robot_name'],
-                'charge_level' => $robotData['charge_level'],
-                'paint_level' => $robotData['paint_level'],
-                'robot_status' => $robotData['robot_status'],
-                'current_location' => $robotData['current_location'],
-                'last_maintenance_date' => $robotData['last_maintenance_date'] ?? null,
-            ]
-        );
-
-        // Save Projects, Road Segments, and Street Defects (same as your original code)
-        if (isset($robotData['projects'])) {
-            foreach ($robotData['projects'] as $projData) {
-                $project = Project::updateOrCreate(
-                    ['project_name' => $projData['project_name'], 'robot_id' => $robot->id],
-                    [
-                        'status' => $projData['status'],
-                        'assignment_date' => $projData['assignment_date'],
-                        'completion_date' => $projData['completion_date'],
-                        'staff_id' => null,
-                    ]
-                );
-
-                if (isset($projData['road_segments'])) {
-                    foreach ($projData['road_segments'] as $segData) {
-                        $segment = RoadSegment::updateOrCreate(
-                            ['segment_name' => $segData['segment_name'], 'project_id' => $project->id],
-                            [
-                                'status' => $segData['status'],
-                                'line_type' => $segData['line_type'],
-                                'start_coordinates' => $segData['start_coordinates'],
-                                'end_coordinates' => $segData['end_coordinates'],
-                                'description' => $segData['description'],
-                            ]
-                        );
-
-                        if (isset($segData['street_defects'])) {
-                            foreach ($segData['street_defects'] as $defectData) {
-                                StreetDefect::updateOrCreate(
-                                    [
-                                        'location' => $defectData['location'],
-                                        'segment_id' => $segment->id,
-                                    ],
-                                    [
-                                        'defect_type' => $defectData['defect_type'],
-                                        'status' => $defectData['status'],
-                                        'image' => $defectData['image'] ?? null,
-                                    ]
-                                );
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        $imported[] = $robot;
-    }
+    $robot = \App\Models\Robot::create($validated);
 
     return response()->json([
-        'message' => 'Data imported successfully',
-        'robots' => $imported
-    ]);
+        'message' => 'Robot created successfully',
+        'robot' => $robot
+    ], 201);
 }
-
-
 }
